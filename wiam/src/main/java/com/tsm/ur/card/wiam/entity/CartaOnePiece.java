@@ -10,7 +10,7 @@ public class CartaOnePiece {
 
     @MongoId
     private String id;
-    private String emailAssociated;
+    private String usernameAssociato;
     private String nome;
     private String lingua;
     private String espansione;

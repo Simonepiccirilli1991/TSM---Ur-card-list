@@ -7,6 +7,7 @@ import com.tsm.ur.card.wiam.model.request.AggiungiOnePiceSealedRequest;
 import com.tsm.ur.card.wiam.model.request.CancellaOpSealedRequest;
 import com.tsm.ur.card.wiam.model.response.AggiungiSealedOPResponse;
 import com.tsm.ur.card.wiam.repository.SealedOnePieceRepo;
+import com.tsm.ur.card.wiam.util.CarteUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,10 +19,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OpSealedService {
 
-    //TODO: agiungere servizi per add carte, cancella, get vari ecc. Implementare securety su orchestratore cache e fare FE con giro di test
-    //TODO implemnetare le api di filtering e recap
 
     private final SealedOnePieceRepo sealedOnePieceRepo;
+    private final CarteUtil carteUtil;
 
     public AggiungiSealedOPResponse aggiungiSealedOnePiece(AggiungiOnePiceSealedRequest request){
         log.info("AggiungiOpSealedService started with raw request: {}",request);
@@ -30,6 +30,9 @@ public class OpSealedService {
         request.validaRequest();
         // mappo su entity
         var entity = request.requestToEntity();
+        // setto id
+        var id = carteUtil.generaIdSealedOnePiece(entity.getUsernameAssociato());
+        entity.setId(id);
         // salvo su db
         var sealed = sealedOnePieceRepo.save(entity);
         log.info("Sealed One Piece salvato correttamente nel db con id: {}",sealed.getId());

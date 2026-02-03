@@ -10,7 +10,7 @@ public class SealedPokemon {
 
     @MongoId
     private String id;
-    private String emailAssociated;
+    private String usernameAssociato;
     private String nome;
     private String lingua;
     private String edizione;
@@ -21,6 +21,7 @@ public class SealedPokemon {
     private String stato; // acquistato/venduto
     private String statoAcquisto; // disponibile/non disponibile
     private byte[] foto;
+    private String acquistatoPresso;
     // sezione vendita
     private Double prezzoVendita;
     private Double costiVendita;

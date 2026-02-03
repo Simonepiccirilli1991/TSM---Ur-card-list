@@ -1,6 +1,5 @@
 package com.tsm.ur.card.wiam.service.carte;
 
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -8,5 +7,5 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class AggiungiOpCardService {
+public class PokemonCardService {
 }
