@@ -2,6 +2,7 @@ package com.tsm.ur.card.wiam.service.carte;
 
 import com.tsm.ur.card.wiam.entity.SealedPokemon;
 import com.tsm.ur.card.wiam.exception.OnePieceException;
+import com.tsm.ur.card.wiam.exception.PokemonException;
 import com.tsm.ur.card.wiam.model.BaseResponse;
 import com.tsm.ur.card.wiam.model.request.AggiungiPokemonSealedRequest;
 import com.tsm.ur.card.wiam.model.request.CancellaPokemonSealedRequest;
@@ -49,13 +50,13 @@ public class PokemonSealedService {
         var sealed = sealedPokemonRepo.findById(request.idSealed())
                 .orElseThrow(() -> {
                     log.error("Sealed Pokemon con id: {} non trovato nel db",request.idSealed());
-                    return new OnePieceException("Sealed Pokemon con id: " + request.idSealed() + " non trovato","404","NOT_FOUND");
+                    return new PokemonException("Sealed Pokemon con id: " + request.idSealed() + " non trovato","404","NOT_FOUND");
                 });
 
         // controllo che userame combacino per effettuaare canellazione
         if(!sealed.getUsernameAssociato().equals(request.username())){
             log.error("Sealed Pokemon con id: {} non appartiene all'utente: {}",request.idSealed(),request.username());
-            throw new OnePieceException("Sealed Pokemon con id: " + request.idSealed() + " non appartiene all'utente: " + request.username(),
+            throw new PokemonException("Sealed Pokemon con id: " + request.idSealed() + " non appartiene all'utente: " + request.username(),
                     "403","FORBIDDEN");
         }
 
@@ -74,7 +75,7 @@ public class PokemonSealedService {
         var sealed = sealedPokemonRepo.findById(id)
                 .orElseThrow(() -> {
                     log.error("Sealed One Piece con id: {} non trovato nel db",id);
-                    return new OnePieceException("Sealed Pokemon con id: " + id + " non trovato","404","NOT_FOUND");
+                    return new PokemonException("Sealed Pokemon con id: " + id + " non trovato","404","NOT_FOUND");
                 });
         log.info("GetPokemonSealedByIdService getSealedPokemonById ended successfully with sealed: {}",sealed);
         return sealed;

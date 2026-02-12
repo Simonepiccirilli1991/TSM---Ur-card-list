@@ -1,14 +1,11 @@
-package com.tsm.ur.card.wiam.entity;
+package com.tsm.ur.card.wiam.model;
 
 import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 
-@Document("carta_pokemon")
 @Data
-public class CartaPokemon {
+public class BaseRecap{
 
-    @MongoId
+    // valori base carte
     private String id;
     private String usernameAssociato;
     private String nome;
@@ -33,4 +30,13 @@ public class CartaPokemon {
     private String dataVendita;
     private String piattaformaVendita;
     private String note;
+
+    // valori base sealed
+    private String dataUscitaProdottoUfficiale;
+    private String acquistatoPresso;
+
+    // TipoProdotto, Pokemon o ONePiece
+    private String tipoProdotto;
+    // Tipo, carta o sealed
+    private String tipo;
 }
