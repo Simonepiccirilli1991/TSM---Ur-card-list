@@ -2,7 +2,7 @@ package com.tsm.ur.card.wiam.service.utenti;
 
 
 import com.tsm.ur.card.wiam.entity.Utente;
-import com.tsm.ur.card.wiam.exception.UtenteException;
+import com.tsm.ur.card.wiam.except.UtenteException;
 import com.tsm.ur.card.wiam.model.BaseResponse;
 import com.tsm.ur.card.wiam.model.request.RegistraUtenteRequest;
 import com.tsm.ur.card.wiam.repository.UtenteRepo;

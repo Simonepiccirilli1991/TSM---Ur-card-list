@@ -1,6 +1,6 @@
 package com.tsm.ur.card.wiam.service.utenti;
 
-import com.tsm.ur.card.wiam.exception.UtenteException;
+import com.tsm.ur.card.wiam.except.UtenteException;
 import com.tsm.ur.card.wiam.model.BaseResponse;
 import com.tsm.ur.card.wiam.model.request.CambioPswRequest;
 import com.tsm.ur.card.wiam.repository.UtenteRepo;

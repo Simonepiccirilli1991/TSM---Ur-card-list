@@ -1,7 +1,7 @@
 package com.tsm.ur.card.wiam.service.carte;
 
 import com.tsm.ur.card.wiam.entity.SealedOnePiece;
-import com.tsm.ur.card.wiam.exception.OnePieceException;
+import com.tsm.ur.card.wiam.except.OnePieceException;
 import com.tsm.ur.card.wiam.model.BaseResponse;
 import com.tsm.ur.card.wiam.model.request.AggiungiOnePiceSealedRequest;
 import com.tsm.ur.card.wiam.model.request.CancellaOpSealedRequest;

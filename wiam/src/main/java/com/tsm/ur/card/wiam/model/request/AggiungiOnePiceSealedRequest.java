@@ -1,7 +1,7 @@
 package com.tsm.ur.card.wiam.model.request;
 
 import com.tsm.ur.card.wiam.entity.SealedOnePiece;
-import com.tsm.ur.card.wiam.exception.OnePieceException;
+import com.tsm.ur.card.wiam.except.OnePieceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.ObjectUtils;
 
@@ -45,12 +45,12 @@ public record AggiungiOnePiceSealedRequest
 
             entity.setPrezzoAcquisto(this.prezzoAcquisto);
             entity.setDataAcquisto(this.dataAcquisto.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-            if(ObjectUtils.isEmpty(this.dataUscitaProdottoUfficiale))
+            if(!ObjectUtils.isEmpty(this.dataUscitaProdottoUfficiale))
                 entity.setDataUscitaProdottoUfficiale(this.dataUscitaProdottoUfficiale.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
 
-            if (ObjectUtils.isEmpty(this.foto))
+            if (!ObjectUtils.isEmpty(this.foto))
                 entity.setFoto(this.foto);
-            if(ObjectUtils.isEmpty(this.acquistatoPresso))
+            if(!ObjectUtils.isEmpty(this.acquistatoPresso))
                 entity.setAcquistatoPresso(this.acquistatoPresso);
 
             entity.setStato(DISPONIBILE);

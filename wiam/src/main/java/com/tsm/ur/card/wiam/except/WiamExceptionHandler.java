@@ -1,6 +1,5 @@
-package com.tsm.ur.card.wiam.exception;
+package com.tsm.ur.card.wiam.except;
 
-import com.tsm.ur.card.wiam.exception.UtenteException;
 import com.tsm.ur.card.wiam.model.ErrorWiamResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +16,6 @@ public class WiamExceptionHandler {
         var status = getStatus(ex.getCodice());
         return new ResponseEntity<>(response, status);
     }
-}
-
 
 
     private HttpStatus getStatus(String codice){
@@ -30,3 +27,4 @@ public class WiamExceptionHandler {
             default -> HttpStatus.INTERNAL_SERVER_ERROR;
         };
     }
+}

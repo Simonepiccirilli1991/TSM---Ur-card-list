@@ -1,7 +1,7 @@
 package com.tsm.ur.card.wiam.model.request;
 
 import com.tsm.ur.card.wiam.entity.CartaOnePiece;
-import com.tsm.ur.card.wiam.exception.OnePieceException;
+import com.tsm.ur.card.wiam.except.OnePieceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.ObjectUtils;
 

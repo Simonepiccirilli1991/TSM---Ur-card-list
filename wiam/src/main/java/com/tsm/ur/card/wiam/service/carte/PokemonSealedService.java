@@ -1,8 +1,7 @@
 package com.tsm.ur.card.wiam.service.carte;
 
 import com.tsm.ur.card.wiam.entity.SealedPokemon;
-import com.tsm.ur.card.wiam.exception.OnePieceException;
-import com.tsm.ur.card.wiam.exception.PokemonException;
+import com.tsm.ur.card.wiam.except.PokemonException;
 import com.tsm.ur.card.wiam.model.BaseResponse;
 import com.tsm.ur.card.wiam.model.request.AggiungiPokemonSealedRequest;
 import com.tsm.ur.card.wiam.model.request.CancellaPokemonSealedRequest;

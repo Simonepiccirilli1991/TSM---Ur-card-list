@@ -1,4 +1,4 @@
-package com.tsm.ur.card.wiam.exception;
+package com.tsm.ur.card.wiam.except;
 
 import lombok.Data;
 

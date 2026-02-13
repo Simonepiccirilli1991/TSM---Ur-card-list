@@ -2,7 +2,7 @@ package com.tsm.ur.card.wiam.service.carte;
 
 
 import com.tsm.ur.card.wiam.entity.CartaOnePiece;
-import com.tsm.ur.card.wiam.exception.OnePieceException;
+import com.tsm.ur.card.wiam.except.OnePieceException;
 import com.tsm.ur.card.wiam.model.BaseResponse;
 import com.tsm.ur.card.wiam.model.request.AggiungiOnePieceCardRequest;
 import com.tsm.ur.card.wiam.model.request.CancellaCartaOpRequest;

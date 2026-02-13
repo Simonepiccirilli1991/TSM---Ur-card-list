@@ -1,6 +1,6 @@
 package com.tsm.ur.card.wiam.service.utenti;
 
-import com.tsm.ur.card.wiam.exception.UtenteException;
+import com.tsm.ur.card.wiam.except.UtenteException;
 import com.tsm.ur.card.wiam.model.BaseResponse;
 import com.tsm.ur.card.wiam.repository.UtenteRepo;
 import lombok.RequiredArgsConstructor;
@@ -71,12 +71,12 @@ public class EnrollService {
     private boolean calcolaOtpEnrollGiornaliero(String utiloOtpData){
 
         var dataUltimoOtp = LocalDateTime.parse(utiloOtpData);
-        // se la data dell'ultimo otp +1 giorno e prima di adesso ritorno false
+        // se la data dell'ultimo otp +1 giorno e prima di adesso ritorno true perche e passato un giorno e puo richiedere otp, altrimenti ritorno false perche non e passato un giorno e non puo richiedere otp
         if(dataUltimoOtp.plusDays(1).isBefore(LocalDateTime.now()))
-            return false;
+            return true;
         // puo richiedere otp
         else
-            return true;
+            return false;
 
 
     }
