@@ -9,7 +9,7 @@ server:
 
   logging:
     level:
-      it.**.advice: { $LOG_LEVEL:INFO }
+      com.tsm.ur.card.wiam.advice: { $LOG_LEVEL:INFO }
     pattern.level: '%5p [traceId=%X{tracingId}]'
 
   #aggignere stringa di connessione a mongo db locale

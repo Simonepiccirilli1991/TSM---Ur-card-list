@@ -27,67 +27,57 @@ public class PokemonController {
     // ===================== POKEMON CARD APIs =====================
 
     @PostMapping("/addcard")
-    public Mono<ResponseEntity<AggiungiCartaPokemonResponse>> aggiungiCartaPokemon(@RequestBody AggiungiCartaPokemonRequest request) {
-        return pokemonService.aggiungiCartaPokemon(request)
-                .map(ResponseEntity::ok);
+    public ResponseEntity<AggiungiCartaPokemonResponse> aggiungiCartaPokemon(@RequestBody AggiungiCartaPokemonRequest request) {
+        return  ResponseEntity.ok(pokemonService.aggiungiCartaPokemon(request));
     }
 
     @DeleteMapping("/cancellacarta")
-    public Mono<ResponseEntity<BaseResponse>> cancellaCartaPokemon(@RequestBody CancellaCartaPokemonRequest request) {
-        return pokemonService.cancellaCartaPokemon(request)
-                .map(ResponseEntity::ok);
+    public ResponseEntity<BaseResponse> cancellaCartaPokemon(@RequestBody CancellaCartaPokemonRequest request) {
+        return  ResponseEntity.ok(pokemonService.cancellaCartaPokemon(request));
     }
 
     @GetMapping("/getcard/{idCarta}")
-    public Mono<ResponseEntity<CartaPokemon>> getCartaPokemonById(@PathVariable String idCarta) {
-        return pokemonService.getCartaPokemonById(idCarta)
-                .map(ResponseEntity::ok);
+    public ResponseEntity<CartaPokemon> getCartaPokemonById(@PathVariable String idCarta) {
+        return  ResponseEntity.ok(pokemonService.getCartaPokemonById(idCarta));
     }
 
     @GetMapping("/getcardsbyusername/{username}")
-    public Mono<ResponseEntity<List<CartaPokemon>>> getCartePokemonByUsername(@PathVariable String username) {
-        return pokemonService.getCartePokemonByUsername(username)
-                .map(ResponseEntity::ok);
+    public ResponseEntity<List<CartaPokemon>> getCartePokemonByUsername(@PathVariable String username) {
+        return  ResponseEntity.ok(pokemonService.getCartePokemonByUsername(username));
     }
 
     @GetMapping("/getcardbyUsernameandstato/{username}/{stato}")
-    public Mono<ResponseEntity<List<CartaPokemon>>> getCartePokemonByUsernameAndStato(
+    public ResponseEntity<List<CartaPokemon>> getCartePokemonByUsernameAndStato(
             @PathVariable String username, @PathVariable String stato) {
-        return pokemonService.getCartePokemonByUsernameAndStato(username, stato)
-                .map(ResponseEntity::ok);
+        return  ResponseEntity.ok(pokemonService.getCartePokemonByUsernameAndStato(username, stato));
     }
 
     // ===================== POKEMON SEALED APIs =====================
 
     @PostMapping("/addsealed")
-    public Mono<ResponseEntity<AggiungiSealedPkmResponse>> aggiungiSealedPokemon(@RequestBody AggiungiPokemonSealedRequest request) {
-        return pokemonService.aggiungiSealedPokemon(request)
-                .map(ResponseEntity::ok);
+    public ResponseEntity<AggiungiSealedPkmResponse> aggiungiSealedPokemon(@RequestBody AggiungiPokemonSealedRequest request) {
+        return  ResponseEntity.ok(pokemonService.aggiungiSealedPokemon(request));
     }
 
     @DeleteMapping("/cancellasealed")
-    public Mono<ResponseEntity<BaseResponse>> cancellaSealedPokemon(@RequestBody CancellaPokemonSealedRequest request) {
-        return pokemonService.cancellaSealedPokemon(request)
-                .map(ResponseEntity::ok);
+    public ResponseEntity<BaseResponse> cancellaSealedPokemon(@RequestBody CancellaPokemonSealedRequest request) {
+        return  ResponseEntity.ok(pokemonService.cancellaSealedPokemon(request));
     }
 
     @GetMapping("/getsealedbyid/{idSealed}")
-    public Mono<ResponseEntity<SealedPokemon>> getSealedPokemonById(@PathVariable String idSealed) {
-        return pokemonService.getSealedPokemonById(idSealed)
-                .map(ResponseEntity::ok);
+    public ResponseEntity<SealedPokemon> getSealedPokemonById(@PathVariable String idSealed) {
+        return  ResponseEntity.ok(pokemonService.getSealedPokemonById(idSealed));
     }
 
     @GetMapping("/getSealedByUsername/{username}")
-    public Mono<ResponseEntity<List<SealedPokemon>>> getSealedPokemonByUsername(@PathVariable String username) {
-        return pokemonService.getSealedPokemonByUsername(username)
-                .map(ResponseEntity::ok);
+    public ResponseEntity<List<SealedPokemon>> getSealedPokemonByUsername(@PathVariable String username) {
+        return  ResponseEntity.ok(pokemonService.getSealedPokemonByUsername(username));
     }
 
     @GetMapping("/getSealedByUsernameAndStato/{username}/{stato}")
-    public Mono<ResponseEntity<List<SealedPokemon>>> getSealedPokemonByUsernameAndStato(
+    public ResponseEntity<List<SealedPokemon>> getSealedPokemonByUsernameAndStato(
             @PathVariable String username, @PathVariable String stato) {
-        return pokemonService.getSealedPokemonByUsernameAndStato(username, stato)
-                .map(ResponseEntity::ok);
+        return  ResponseEntity.ok(pokemonService.getSealedPokemonByUsernameAndStato(username, stato));
     }
 }
 

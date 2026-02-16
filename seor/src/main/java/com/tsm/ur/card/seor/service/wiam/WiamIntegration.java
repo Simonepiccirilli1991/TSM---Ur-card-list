@@ -23,17 +23,18 @@ public class WiamIntegration {
 
     // ===================== UTENTE APIs =====================
 
-    public Mono<BaseResponse> enrollUtente(String username) {
+    public BaseResponse enrollUtente(String username) {
         log.info("Chiamata WIAM - enrollUtente per username: {}", username);
         return wiamWebClient.post()
                 .uri("/api/v1/utente/enroll/{username}", username)
                 .retrieve()
                 .bodyToMono(BaseResponse.class)
                 .doOnSuccess(response -> log.info("WIAM enrollUtente response: {}", response))
-                .doOnError(error -> log.error("WIAM enrollUtente error: {}", error.getMessage()));
+                .doOnError(error -> log.error("WIAM enrollUtente error: {}", error.getMessage()))
+                .block();
     }
 
-    public Mono<BaseResponse> cambioPassword(CambioPswRequest request) {
+    public BaseResponse cambioPassword(CambioPswRequest request) {
         log.info("Chiamata WIAM - cambioPassword per username: {}", request.username());
         return wiamWebClient.post()
                 .uri("/api/v1/utente/cambio-password")
@@ -41,10 +42,11 @@ public class WiamIntegration {
                 .retrieve()
                 .bodyToMono(BaseResponse.class)
                 .doOnSuccess(response -> log.info("WIAM cambioPassword response: {}", response))
-                .doOnError(error -> log.error("WIAM cambioPassword error: {}", error.getMessage()));
+                .doOnError(error -> log.error("WIAM cambioPassword error: {}", error.getMessage()))
+                .block();
     }
 
-    public Mono<BaseResponse> recuperoPassword(RecuperoPswRequest request) {
+    public BaseResponse recuperoPassword(RecuperoPswRequest request) {
         log.info("Chiamata WIAM - recuperoPassword per username: {}", request.username());
         return wiamWebClient.post()
                 .uri("/api/v1/utente/recupero-password")
@@ -52,10 +54,11 @@ public class WiamIntegration {
                 .retrieve()
                 .bodyToMono(BaseResponse.class)
                 .doOnSuccess(response -> log.info("WIAM recuperoPassword response: {}", response))
-                .doOnError(error -> log.error("WIAM recuperoPassword error: {}", error.getMessage()));
+                .doOnError(error -> log.error("WIAM recuperoPassword error: {}", error.getMessage()))
+                .block();
     }
 
-    public Mono<BaseResponse> registraUtente(RegistraUtenteRequest request) {
+    public BaseResponse registraUtente(RegistraUtenteRequest request) {
         log.info("Chiamata WIAM - registraUtente per username: {}", request.username());
         return wiamWebClient.post()
                 .uri("/api/v1/utente/registra-utente")
@@ -63,12 +66,13 @@ public class WiamIntegration {
                 .retrieve()
                 .bodyToMono(BaseResponse.class)
                 .doOnSuccess(response -> log.info("WIAM registraUtente response: {}", response))
-                .doOnError(error -> log.error("WIAM registraUtente error: {}", error.getMessage()));
+                .doOnError(error -> log.error("WIAM registraUtente error: {}", error.getMessage()))
+                .block();
     }
 
     // ===================== POKEMON CARD APIs =====================
 
-    public Mono<AggiungiCartaPokemonResponse> aggiungiCartaPokemon(AggiungiCartaPokemonRequest request) {
+    public AggiungiCartaPokemonResponse aggiungiCartaPokemon(AggiungiCartaPokemonRequest request) {
         log.info("Chiamata WIAM - aggiungiCartaPokemon per username: {}", request.usernameAssociato());
         return wiamWebClient.post()
                 .uri("/api/v1/pokemon/card/addcard")
@@ -76,10 +80,11 @@ public class WiamIntegration {
                 .retrieve()
                 .bodyToMono(AggiungiCartaPokemonResponse.class)
                 .doOnSuccess(response -> log.info("WIAM aggiungiCartaPokemon response: {}", response))
-                .doOnError(error -> log.error("WIAM aggiungiCartaPokemon error: {}", error.getMessage()));
+                .doOnError(error -> log.error("WIAM aggiungiCartaPokemon error: {}", error.getMessage()))
+                .block();
     }
 
-    public Mono<BaseResponse> cancellaCartaPokemon(CancellaCartaPokemonRequest request) {
+    public BaseResponse cancellaCartaPokemon(CancellaCartaPokemonRequest request) {
         log.info("Chiamata WIAM - cancellaCartaPokemon per idCarta: {}", request.idCarta());
         return wiamWebClient.method(org.springframework.http.HttpMethod.DELETE)
                 .uri("/api/v1/pokemon/card/cancellacarta")
@@ -87,42 +92,46 @@ public class WiamIntegration {
                 .retrieve()
                 .bodyToMono(BaseResponse.class)
                 .doOnSuccess(response -> log.info("WIAM cancellaCartaPokemon response: {}", response))
-                .doOnError(error -> log.error("WIAM cancellaCartaPokemon error: {}", error.getMessage()));
+                .doOnError(error -> log.error("WIAM cancellaCartaPokemon error: {}", error.getMessage()))
+                .block();
     }
 
-    public Mono<CartaPokemon> getCartaPokemonById(String idCarta) {
+    public CartaPokemon getCartaPokemonById(String idCarta) {
         log.info("Chiamata WIAM - getCartaPokemonById per id: {}", idCarta);
         return wiamWebClient.get()
                 .uri("/api/v1/pokemon/card/getcard/{idCarta}", idCarta)
                 .retrieve()
                 .bodyToMono(CartaPokemon.class)
                 .doOnSuccess(response -> log.info("WIAM getCartaPokemonById response: {}", response))
-                .doOnError(error -> log.error("WIAM getCartaPokemonById error: {}", error.getMessage()));
+                .doOnError(error -> log.error("WIAM getCartaPokemonById error: {}", error.getMessage()))
+                .block();
     }
 
-    public Mono<List<CartaPokemon>> getCartePokemonByUsername(String username) {
+    public List<CartaPokemon> getCartePokemonByUsername(String username) {
         log.info("Chiamata WIAM - getCartePokemonByUsername per username: {}", username);
         return wiamWebClient.get()
                 .uri("/api/v1/pokemon/card/getcardsbyusername/{username}", username)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<CartaPokemon>>() {})
                 .doOnSuccess(response -> log.info("WIAM getCartePokemonByUsername response count: {}", response != null ? response.size() : 0))
-                .doOnError(error -> log.error("WIAM getCartePokemonByUsername error: {}", error.getMessage()));
+                .doOnError(error -> log.error("WIAM getCartePokemonByUsername error: {}", error.getMessage()))
+                .block();
     }
 
-    public Mono<List<CartaPokemon>> getCartePokemonByUsernameAndStato(String username, String stato) {
+    public List<CartaPokemon> getCartePokemonByUsernameAndStato(String username, String stato) {
         log.info("Chiamata WIAM - getCartePokemonByUsernameAndStato per username: {}, stato: {}", username, stato);
         return wiamWebClient.get()
                 .uri("/api/v1/pokemon/card/getcardbyUsernameandstato/{username}/{stato}", username, stato)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<CartaPokemon>>() {})
                 .doOnSuccess(response -> log.info("WIAM getCartePokemonByUsernameAndStato response count: {}", response != null ? response.size() : 0))
-                .doOnError(error -> log.error("WIAM getCartePokemonByUsernameAndStato error: {}", error.getMessage()));
+                .doOnError(error -> log.error("WIAM getCartePokemonByUsernameAndStato error: {}", error.getMessage()))
+                .block();
     }
 
     // ===================== POKEMON SEALED APIs =====================
 
-    public Mono<AggiungiSealedPkmResponse> aggiungiSealedPokemon(AggiungiPokemonSealedRequest request) {
+    public AggiungiSealedPkmResponse aggiungiSealedPokemon(AggiungiPokemonSealedRequest request) {
         log.info("Chiamata WIAM - aggiungiSealedPokemon per username: {}", request.username());
         return wiamWebClient.post()
                 .uri("/api/v1/pokemon/card/addsealed")
@@ -130,10 +139,11 @@ public class WiamIntegration {
                 .retrieve()
                 .bodyToMono(AggiungiSealedPkmResponse.class)
                 .doOnSuccess(response -> log.info("WIAM aggiungiSealedPokemon response: {}", response))
-                .doOnError(error -> log.error("WIAM aggiungiSealedPokemon error: {}", error.getMessage()));
+                .doOnError(error -> log.error("WIAM aggiungiSealedPokemon error: {}", error.getMessage()))
+                .block();
     }
 
-    public Mono<BaseResponse> cancellaSealedPokemon(CancellaPokemonSealedRequest request) {
+    public BaseResponse cancellaSealedPokemon(CancellaPokemonSealedRequest request) {
         log.info("Chiamata WIAM - cancellaSealedPokemon per idSealed: {}", request.idSealed());
         return wiamWebClient.method(org.springframework.http.HttpMethod.DELETE)
                 .uri("/api/v1/pokemon/card/cancellasealed")
@@ -141,42 +151,46 @@ public class WiamIntegration {
                 .retrieve()
                 .bodyToMono(BaseResponse.class)
                 .doOnSuccess(response -> log.info("WIAM cancellaSealedPokemon response: {}", response))
-                .doOnError(error -> log.error("WIAM cancellaSealedPokemon error: {}", error.getMessage()));
+                .doOnError(error -> log.error("WIAM cancellaSealedPokemon error: {}", error.getMessage()))
+                .block();
     }
 
-    public Mono<SealedPokemon> getSealedPokemonById(String idSealed) {
+    public SealedPokemon getSealedPokemonById(String idSealed) {
         log.info("Chiamata WIAM - getSealedPokemonById per id: {}", idSealed);
         return wiamWebClient.get()
                 .uri("/api/v1/pokemon/card/getsealedbyid/{idSealed}", idSealed)
                 .retrieve()
                 .bodyToMono(SealedPokemon.class)
                 .doOnSuccess(response -> log.info("WIAM getSealedPokemonById response: {}", response))
-                .doOnError(error -> log.error("WIAM getSealedPokemonById error: {}", error.getMessage()));
+                .doOnError(error -> log.error("WIAM getSealedPokemonById error: {}", error.getMessage()))
+                .block();
     }
 
-    public Mono<List<SealedPokemon>> getSealedPokemonByUsername(String username) {
+    public List<SealedPokemon> getSealedPokemonByUsername(String username) {
         log.info("Chiamata WIAM - getSealedPokemonByUsername per username: {}", username);
         return wiamWebClient.get()
                 .uri("/api/v1/pokemon/card/getSealedByUsername/{username}", username)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<SealedPokemon>>() {})
                 .doOnSuccess(response -> log.info("WIAM getSealedPokemonByUsername response count: {}", response != null ? response.size() : 0))
-                .doOnError(error -> log.error("WIAM getSealedPokemonByUsername error: {}", error.getMessage()));
+                .doOnError(error -> log.error("WIAM getSealedPokemonByUsername error: {}", error.getMessage()))
+                .block();
     }
 
-    public Mono<List<SealedPokemon>> getSealedPokemonByUsernameAndStato(String username, String stato) {
+    public List<SealedPokemon> getSealedPokemonByUsernameAndStato(String username, String stato) {
         log.info("Chiamata WIAM - getSealedPokemonByUsernameAndStato per username: {}, stato: {}", username, stato);
         return wiamWebClient.get()
                 .uri("/api/v1/pokemon/card/getSealedByUsernameAndStato/{username}/{stato}", username, stato)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<SealedPokemon>>() {})
                 .doOnSuccess(response -> log.info("WIAM getSealedPokemonByUsernameAndStato response count: {}", response != null ? response.size() : 0))
-                .doOnError(error -> log.error("WIAM getSealedPokemonByUsernameAndStato error: {}", error.getMessage()));
+                .doOnError(error -> log.error("WIAM getSealedPokemonByUsernameAndStato error: {}", error.getMessage()))
+                .block();
     }
 
     // ===================== ONE PIECE SEALED APIs =====================
 
-    public Mono<AggiungiSealedOPResponse> aggiungiSealedOnePiece(AggiungiOnePieceSealedRequest request) {
+    public AggiungiSealedOPResponse aggiungiSealedOnePiece(AggiungiOnePieceSealedRequest request) {
         log.info("Chiamata WIAM - aggiungiSealedOnePiece per username: {}", request.username());
         return wiamWebClient.post()
                 .uri("/api/v1/onepiece/add-sealed")
@@ -184,10 +198,11 @@ public class WiamIntegration {
                 .retrieve()
                 .bodyToMono(AggiungiSealedOPResponse.class)
                 .doOnSuccess(response -> log.info("WIAM aggiungiSealedOnePiece response: {}", response))
-                .doOnError(error -> log.error("WIAM aggiungiSealedOnePiece error: {}", error.getMessage()));
+                .doOnError(error -> log.error("WIAM aggiungiSealedOnePiece error: {}", error.getMessage()))
+                .block();
     }
 
-    public Mono<BaseResponse> cancellaSealedOnePiece(CancellaOnePieceSealedRequest request) {
+    public BaseResponse cancellaSealedOnePiece(CancellaOnePieceSealedRequest request) {
         log.info("Chiamata WIAM - cancellaSealedOnePiece per idSealed: {}", request.idSealed());
         return wiamWebClient.post()
                 .uri("/api/v1/onepiece/delete-sealed")
@@ -195,42 +210,46 @@ public class WiamIntegration {
                 .retrieve()
                 .bodyToMono(BaseResponse.class)
                 .doOnSuccess(response -> log.info("WIAM cancellaSealedOnePiece response: {}", response))
-                .doOnError(error -> log.error("WIAM cancellaSealedOnePiece error: {}", error.getMessage()));
+                .doOnError(error -> log.error("WIAM cancellaSealedOnePiece error: {}", error.getMessage()))
+                .block();
     }
 
-    public Mono<SealedOnePiece> getSealedOnePieceById(String idSealed) {
+    public SealedOnePiece getSealedOnePieceById(String idSealed) {
         log.info("Chiamata WIAM - getSealedOnePieceById per id: {}", idSealed);
         return wiamWebClient.get()
                 .uri("/api/v1/onepiece/get-sealed/{idSealed}", idSealed)
                 .retrieve()
                 .bodyToMono(SealedOnePiece.class)
                 .doOnSuccess(response -> log.info("WIAM getSealedOnePieceById response: {}", response))
-                .doOnError(error -> log.error("WIAM getSealedOnePieceById error: {}", error.getMessage()));
+                .doOnError(error -> log.error("WIAM getSealedOnePieceById error: {}", error.getMessage()))
+                .block();
     }
 
-    public Mono<List<SealedOnePiece>> getSealedOnePieceByUsername(String username) {
+    public List<SealedOnePiece> getSealedOnePieceByUsername(String username) {
         log.info("Chiamata WIAM - getSealedOnePieceByUsername per username: {}", username);
         return wiamWebClient.get()
                 .uri("/api/v1/onepiece/get-sealed-by-user/{username}", username)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<SealedOnePiece>>() {})
                 .doOnSuccess(response -> log.info("WIAM getSealedOnePieceByUsername response count: {}", response != null ? response.size() : 0))
-                .doOnError(error -> log.error("WIAM getSealedOnePieceByUsername error: {}", error.getMessage()));
+                .doOnError(error -> log.error("WIAM getSealedOnePieceByUsername error: {}", error.getMessage()))
+                .block();
     }
 
-    public Mono<List<SealedOnePiece>> getSealedOnePieceByUsernameAndStato(String username, String stato) {
+    public List<SealedOnePiece> getSealedOnePieceByUsernameAndStato(String username, String stato) {
         log.info("Chiamata WIAM - getSealedOnePieceByUsernameAndStato per username: {}, stato: {}", username, stato);
         return wiamWebClient.get()
                 .uri("/api/v1/onepiece/get-sealed-bystato/{username}/{stato}", username, stato)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<SealedOnePiece>>() {})
                 .doOnSuccess(response -> log.info("WIAM getSealedOnePieceByUsernameAndStato response count: {}", response != null ? response.size() : 0))
-                .doOnError(error -> log.error("WIAM getSealedOnePieceByUsernameAndStato error: {}", error.getMessage()));
+                .doOnError(error -> log.error("WIAM getSealedOnePieceByUsernameAndStato error: {}", error.getMessage()))
+                .block();
     }
 
     // ===================== RECAP APIs =====================
 
-    public Mono<List<BaseRecap>> getRecap(RecapRequest request) {
+    public List<BaseRecap> getRecap(RecapRequest request) {
         log.info("Chiamata WIAM - getRecap per username: {}", request.username());
         return wiamWebClient.post()
                 .uri("/api/v1/recap/getrecap")
@@ -238,6 +257,7 @@ public class WiamIntegration {
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<BaseRecap>>() {})
                 .doOnSuccess(response -> log.info("WIAM getRecap response count: {}", response != null ? response.size() : 0))
-                .doOnError(error -> log.error("WIAM getRecap error: {}", error.getMessage()));
+                .doOnError(error -> log.error("WIAM getRecap error: {}", error.getMessage()))
+                .block();
     }
 }

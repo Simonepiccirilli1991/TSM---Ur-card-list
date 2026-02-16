@@ -20,27 +20,27 @@ public class OnePieceService {
 
     private final WiamIntegration wiamIntegration;
 
-    public Mono<AggiungiSealedOPResponse> aggiungiSealedOnePiece(AggiungiOnePieceSealedRequest request) {
+    public AggiungiSealedOPResponse aggiungiSealedOnePiece(AggiungiOnePieceSealedRequest request) {
         log.info("OnePieceService - aggiungiSealedOnePiece per username: {}", request.username());
         return wiamIntegration.aggiungiSealedOnePiece(request);
     }
 
-    public Mono<BaseResponse> cancellaSealedOnePiece(CancellaOnePieceSealedRequest request) {
+    public BaseResponse cancellaSealedOnePiece(CancellaOnePieceSealedRequest request) {
         log.info("OnePieceService - cancellaSealedOnePiece per idSealed: {}", request.idSealed());
         return wiamIntegration.cancellaSealedOnePiece(request);
     }
 
-    public Mono<SealedOnePiece> getSealedOnePieceById(String idSealed) {
+    public SealedOnePiece getSealedOnePieceById(String idSealed) {
         log.info("OnePieceService - getSealedOnePieceById per id: {}", idSealed);
         return wiamIntegration.getSealedOnePieceById(idSealed);
     }
 
-    public Mono<List<SealedOnePiece>> getSealedOnePieceByUsername(String username) {
+    public List<SealedOnePiece> getSealedOnePieceByUsername(String username) {
         log.info("OnePieceService - getSealedOnePieceByUsername per username: {}", username);
         return wiamIntegration.getSealedOnePieceByUsername(username);
     }
 
-    public Mono<List<SealedOnePiece>> getSealedOnePieceByUsernameAndStato(String username, String stato) {
+    public List<SealedOnePiece> getSealedOnePieceByUsernameAndStato(String username, String stato) {
         log.info("OnePieceService - getSealedOnePieceByUsernameAndStato per username: {}, stato: {}", username, stato);
         return wiamIntegration.getSealedOnePieceByUsernameAndStato(username, stato);
     }

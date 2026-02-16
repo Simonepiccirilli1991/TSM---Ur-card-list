@@ -1,9 +1,16 @@
 spring:
-  application:
-    name: seor
+  application.name: seor
+  threads:
+    virtual:
+      enabled: true
 
 server:
   port: 8080
+
+  logging:
+    level:
+      com.tsm.ur.card.seor.advice: { $LOG_LEVEL:INFO }
+    pattern.level: '%5p [traceId=%X{tracingId}]'
 
 wiam:
   base-url: http://localhost:8081

@@ -17,22 +17,22 @@ public class UtenteService {
 
     private final WiamIntegration wiamIntegration;
 
-    public Mono<BaseResponse> enrollUtente(String username) {
+    public BaseResponse enrollUtente(String username) {
         log.info("UtenteService - enrollUtente per username: {}", username);
         return wiamIntegration.enrollUtente(username);
     }
 
-    public Mono<BaseResponse> cambioPassword(CambioPswRequest request) {
+    public BaseResponse cambioPassword(CambioPswRequest request) {
         log.info("UtenteService - cambioPassword per username: {}", request.username());
         return wiamIntegration.cambioPassword(request);
     }
 
-    public Mono<BaseResponse> recuperoPassword(RecuperoPswRequest request) {
+    public BaseResponse recuperoPassword(RecuperoPswRequest request) {
         log.info("UtenteService - recuperoPassword per username: {}", request.username());
         return wiamIntegration.recuperoPassword(request);
     }
 
-    public Mono<BaseResponse> registraUtente(RegistraUtenteRequest request) {
+    public BaseResponse registraUtente(RegistraUtenteRequest request) {
         log.info("UtenteService - registraUtente per username: {}", request.username());
         return wiamIntegration.registraUtente(request);
     }

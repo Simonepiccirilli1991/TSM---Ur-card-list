@@ -21,9 +21,8 @@ public class RecapController {
     private final RecapService recapService;
 
     @PostMapping("/getrecap")
-    public Mono<ResponseEntity<List<BaseRecap>>> getRecap(@RequestBody RecapRequest request) {
-        return recapService.getRecap(request)
-                .map(ResponseEntity::ok);
+    public ResponseEntity<List<BaseRecap>> getRecap(@RequestBody RecapRequest request) {
+        return  ResponseEntity.ok(recapService.getRecap(request));
     }
 }
 

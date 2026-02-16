@@ -17,7 +17,7 @@ public class RecapService {
 
     private final WiamIntegration wiamIntegration;
 
-    public Mono<List<BaseRecap>> getRecap(RecapRequest request) {
+    public List<BaseRecap> getRecap(RecapRequest request) {
         log.info("RecapService - getRecap per username: {}", request.username());
         return wiamIntegration.getRecap(request);
     }

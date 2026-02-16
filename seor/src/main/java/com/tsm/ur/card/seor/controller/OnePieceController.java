@@ -21,34 +21,29 @@ public class OnePieceController {
     private final OnePieceService onePieceService;
 
     @PostMapping("/add-sealed")
-    public Mono<ResponseEntity<AggiungiSealedOPResponse>> aggiungiSealedOP(@RequestBody AggiungiOnePieceSealedRequest request) {
-        return onePieceService.aggiungiSealedOnePiece(request)
-                .map(ResponseEntity::ok);
+    public ResponseEntity<AggiungiSealedOPResponse> aggiungiSealedOP(@RequestBody AggiungiOnePieceSealedRequest request) {
+        return ResponseEntity.ok(onePieceService.aggiungiSealedOnePiece(request));
     }
 
     @PostMapping("/delete-sealed")
-    public Mono<ResponseEntity<BaseResponse>> cancellaSealedOP(@RequestBody CancellaOnePieceSealedRequest request) {
-        return onePieceService.cancellaSealedOnePiece(request)
-                .map(ResponseEntity::ok);
+    public ResponseEntity<BaseResponse> cancellaSealedOP(@RequestBody CancellaOnePieceSealedRequest request) {
+        return  ResponseEntity.ok(onePieceService.cancellaSealedOnePiece(request));
     }
 
     @GetMapping("/get-sealed/{idSealed}")
-    public Mono<ResponseEntity<SealedOnePiece>> getSealed(@PathVariable String idSealed) {
-        return onePieceService.getSealedOnePieceById(idSealed)
-                .map(ResponseEntity::ok);
+    public ResponseEntity<SealedOnePiece> getSealed(@PathVariable String idSealed) {
+        return  ResponseEntity.ok(onePieceService.getSealedOnePieceById(idSealed));
     }
 
     @GetMapping("/get-sealed-by-user/{username}")
-    public Mono<ResponseEntity<List<SealedOnePiece>>> getSealedByUser(@PathVariable String username) {
-        return onePieceService.getSealedOnePieceByUsername(username)
-                .map(ResponseEntity::ok);
+    public ResponseEntity<List<SealedOnePiece>> getSealedByUser(@PathVariable String username) {
+        return  ResponseEntity.ok(onePieceService.getSealedOnePieceByUsername(username));
     }
 
     @GetMapping("/get-sealed-bystato/{username}/{stato}")
-    public Mono<ResponseEntity<List<SealedOnePiece>>> getSealedByStato(
+    public ResponseEntity<List<SealedOnePiece>> getSealedByStato(
             @PathVariable String username, @PathVariable String stato) {
-        return onePieceService.getSealedOnePieceByUsernameAndStato(username, stato)
-                .map(ResponseEntity::ok);
+        return  ResponseEntity.ok(onePieceService.getSealedOnePieceByUsernameAndStato(username, stato));
     }
 }
 
