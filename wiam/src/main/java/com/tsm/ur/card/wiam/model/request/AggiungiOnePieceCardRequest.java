@@ -72,4 +72,20 @@ public record AggiungiOnePieceCardRequest(
         return entity;
     }
 
+    @Override
+    public String toString() {
+        return "AggiungiOnePieceCardRequest[" +
+                "usernameAssociato=" + usernameAssociato +
+                ", nome=" + nome +
+                ", lingua=" + lingua +
+                ", espansione=" + espansione +
+                ", prezzoAcquisto=" + prezzoAcquisto +
+                ", dataAcquisto=" + dataAcquisto +
+                ", foto=[MASKED]" +
+                ", gradata=" + gradata +
+                ", enteGradazione=" + enteGradazione +
+                ", votoGradazione=" + votoGradazione +
+                ", statoCarta=" + statoCarta +
+                "]";
+    }
 }

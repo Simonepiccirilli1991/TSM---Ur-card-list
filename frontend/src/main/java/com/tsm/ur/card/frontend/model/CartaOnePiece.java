@@ -13,6 +13,11 @@ public class CartaOnePiece {
     private String dataAcquisto;
     private String foto;
 
+    // Sezione gradazione
+    private Boolean gradata;
+    private String enteGradazione;
+    private String votoGradazione;
+
     // Sezione stato
     private String statoCarta;
     private String stato;
@@ -23,5 +28,7 @@ public class CartaOnePiece {
     private Double costiVendita;
     private Double netto;
     private String dataVendita;
+    private String piattaformaVendita;
+    private String note;
 }
 

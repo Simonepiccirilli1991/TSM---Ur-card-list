@@ -17,7 +17,7 @@ public record AggiungiPokemonSealedRequest(
 
         String username,
         String nome,
-        String linguea,
+        String lingua,
         String espansione,
         Double prezzoAcquisto,
         LocalDate dataAcquisto,
@@ -28,7 +28,7 @@ public record AggiungiPokemonSealedRequest(
 
     public void validaRequest(){
         if(ObjectUtils.isEmpty(username) || ObjectUtils.isEmpty(nome) ||
-                ObjectUtils.isEmpty(linguea) || ObjectUtils.isEmpty(prezzoAcquisto) ||
+                ObjectUtils.isEmpty(lingua) || ObjectUtils.isEmpty(prezzoAcquisto) ||
                 ObjectUtils.isEmpty(dataAcquisto)){
             log.error("Errore di validazione della request sealed pokm: {}",this);
             throw new OnePieceException("Campi obbligatori mancanti nella request","Invalid REquest","WIAM-400op");
@@ -41,7 +41,7 @@ public record AggiungiPokemonSealedRequest(
         var entity = new SealedPokemon();
         entity.setUsernameAssociato(this.username);
         entity.setNome(this.nome);
-        entity.setLingua(this.linguea);
+        entity.setLingua(this.lingua);
         if(ObjectUtils.isEmpty(this.espansione))
             entity.setEspansione(this.espansione);
 
@@ -58,5 +58,20 @@ public record AggiungiPokemonSealedRequest(
         entity.setStato(DISPONIBILE);
         entity.setStatoAcquisto(ACQUISTATO);
         return entity;
+    }
+
+    @Override
+    public String toString() {
+        return "AggiungiPokemonSealedRequest[" +
+                "username=" + username +
+                ", nome=" + nome +
+                ", lingua=" + lingua +
+                ", espansione=" + espansione +
+                ", prezzoAcquisto=" + prezzoAcquisto +
+                ", dataAcquisto=" + dataAcquisto +
+                ", dataUscitaProdottoUfficiale=" + dataUscitaProdottoUfficiale +
+                ", foto=[MASKED]" +
+                ", acquistatoPresso=" + acquistatoPresso +
+                "]";
     }
 }

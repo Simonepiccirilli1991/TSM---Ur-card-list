@@ -80,25 +80,33 @@ public class DashboardController {
             }
 
             String stato = item.getStato();
-            if ("in_collezione".equals(stato)) {
+            String statoAcquisto = item.getStatoAcquisto();
+
+            // "venduto" = prodotto venduto
+            if ("venduto".equals(stato)) {
+                prodottiVenduti++;
+                if (item.getPrezzoVendita() != null) {
+                    totaleVendite += item.getPrezzoVendita();
+                    // Calcolo profitto netto corretto: vendita - acquisto - costi vendita
+                    double prezzoAcquisto = item.getPrezzoAcquisto() != null ? item.getPrezzoAcquisto() : 0;
+                    double costiVendita = item.getCostiVendita() != null ? item.getCostiVendita() : 0;
+                    profittoTotale += item.getPrezzoVendita() - prezzoAcquisto - costiVendita;
+                }
+            }
+            // "acquistato" con statoAcquisto "disponibile" = in collezione
+            else if ("acquistato".equals(stato) && "disponibile".equals(statoAcquisto)) {
                 prodottiInCollezione++;
                 if (item.getPrezzoAcquisto() != null) {
                     valoreCollezione += item.getPrezzoAcquisto();
                 }
-            } else if ("in_vendita".equals(stato)) {
+            }
+            // "acquistato" con statoAcquisto "non disponibile" ma non venduto = in vendita
+            else if ("acquistato".equals(stato) && "non disponibile".equals(statoAcquisto)) {
                 prodottiInVendita++;
-            } else if ("venduto".equals(stato)) {
-                prodottiVenduti++;
-                if (item.getNetto() != null) {
-                    profittoTotale += item.getNetto();
-                }
-                if (item.getPrezzoVendita() != null) {
-                    totaleVendite += item.getPrezzoVendita();
-                }
             }
         }
 
-        stats.setValoreCollezione(valoreCollezione);
+        stats.setValoreCollezione(totaleAcquisti);
         stats.setProfittoTotale(profittoTotale);
         stats.setProdottiInCollezione(prodottiInCollezione);
         stats.setProdottiInVendita(prodottiInVendita);

@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public record AggiungiPokemonSealedRequest(
         String username,
         String nome,
-        String linguea,
+        String lingua,
         String espansione,
         Double prezzoAcquisto,
         LocalDate dataAcquisto,
@@ -13,4 +13,18 @@ public record AggiungiPokemonSealedRequest(
         byte[] foto,
         String acquistatoPresso
 ) {
+    @Override
+    public String toString() {
+        return "AggiungiPokemonSealedRequest[" +
+                "username=" + username +
+                ", nome=" + nome +
+                ", lingua=" + lingua +
+                ", espansione=" + espansione +
+                ", prezzoAcquisto=" + prezzoAcquisto +
+                ", dataAcquisto=" + dataAcquisto +
+                ", dataUscitaProdottoUfficiale=" + dataUscitaProdottoUfficiale +
+                ", foto=[MASKED]" +
+                ", acquistatoPresso=" + acquistatoPresso +
+                "]";
+    }
 }

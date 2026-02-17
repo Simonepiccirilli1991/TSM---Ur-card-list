@@ -11,5 +11,9 @@ public class AggiungiCartaOnePieceForm {
     private String dataAcquisto;
     private String foto;
     private String statoCarta;
+    // Campi gradazione
+    private Boolean gradata;
+    private String enteGradazione;
+    private String votoGradazione;
 }
 

@@ -35,12 +35,21 @@ public class RecapController {
         // Applica filtri
         if (tipo != null && !tipo.isEmpty()) {
             recapList = recapList.stream()
-                    .filter(r -> tipo.equals(r.getTipoProdotto()))
+                    .filter(r -> tipo.equalsIgnoreCase(r.getTipoProdotto()))
                     .collect(Collectors.toList());
         }
         if (stato != null && !stato.isEmpty()) {
             recapList = recapList.stream()
-                    .filter(r -> stato.equals(r.getStato()))
+                    .filter(r -> {
+                        String itemStato = r.getStato();
+                        String itemStatoAcquisto = r.getStatoAcquisto();
+                        return switch (stato) {
+                            case "in_collezione" -> "acquistato".equals(itemStato) && "disponibile".equals(itemStatoAcquisto);
+                            case "in_vendita" -> "acquistato".equals(itemStato) && "non disponibile".equals(itemStatoAcquisto);
+                            case "venduto" -> "venduto".equals(itemStato);
+                            default -> true;
+                        };
+                    })
                     .collect(Collectors.toList());
         }
 
@@ -70,17 +79,28 @@ public class RecapController {
                 totaleAcquisti += item.getPrezzoAcquisto();
             }
 
-            if ("venduto".equals(item.getStato())) {
+            String stato = item.getStato();
+            String statoAcquisto = item.getStatoAcquisto();
+
+            // "venduto" = prodotto venduto
+            if ("venduto".equals(stato)) {
                 venduti++;
                 if (item.getPrezzoVendita() != null) {
                     totaleVendite += item.getPrezzoVendita();
+                    // Calcolo profitto netto corretto: vendita - acquisto - costi vendita
+                    double prezzoAcquisto = item.getPrezzoAcquisto() != null ? item.getPrezzoAcquisto() : 0;
+                    double costiVendita = item.getCostiVendita() != null ? item.getCostiVendita() : 0;
+                    double nettoCalcolato = item.getPrezzoVendita() - prezzoAcquisto - costiVendita;
+                    item.setNetto(nettoCalcolato); // Aggiorna anche l'item per la visualizzazione in tabella
+                    profittoNetto += nettoCalcolato;
                 }
-                if (item.getNetto() != null) {
-                    profittoNetto += item.getNetto();
-                }
-            } else if ("in_collezione".equals(item.getStato())) {
+            }
+            // "acquistato" con statoAcquisto "disponibile" = in collezione
+            else if ("acquistato".equals(stato) && "disponibile".equals(statoAcquisto)) {
                 inCollezione++;
-            } else if ("in_vendita".equals(item.getStato())) {
+            }
+            // "acquistato" con statoAcquisto "non disponibile" ma non venduto = in vendita
+            else if ("acquistato".equals(stato) && "non disponibile".equals(statoAcquisto)) {
                 inVendita++;
             }
         }

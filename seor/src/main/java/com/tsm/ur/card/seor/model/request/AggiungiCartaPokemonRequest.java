@@ -15,5 +15,21 @@ public record AggiungiCartaPokemonRequest(
         String votoGradazione,
         String statoCarta
 ) {
+    @Override
+    public String toString() {
+        return "AggiungiCartaPokemonRequest[" +
+                "usernameAssociato=" + usernameAssociato +
+                ", nome=" + nome +
+                ", lingua=" + lingua +
+                ", espansione=" + espansione +
+                ", prezzoAcquisto=" + prezzoAcquisto +
+                ", dataAcquisto=" + dataAcquisto +
+                ", foto=[MASKED]" +
+                ", gradata=" + gradata +
+                ", enteGradazione=" + enteGradazione +
+                ", votoGradazione=" + votoGradazione +
+                ", statoCarta=" + statoCarta +
+                "]";
+    }
 }
 

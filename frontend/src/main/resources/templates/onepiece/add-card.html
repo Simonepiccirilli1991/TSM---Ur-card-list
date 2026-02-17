@@ -59,6 +59,25 @@
                     <option value="light_played">Light Played</option>
                 </select>
 
+                <!-- Gradata Toggle -->
+                <div class="border-t border-gray-100 pt-3 mb-3">
+                    <label class="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+                        <input type="checkbox" th:field="*{gradata}" id="gradata" onchange="document.getElementById('gradingRow').classList.toggle('hidden', !this.checked)"
+                               class="w-4 h-4 text-red-500 rounded">
+                        Carta gradata
+                    </label>
+                    <div id="gradingRow" class="grid grid-cols-2 gap-2 mt-2 hidden">
+                        <select th:field="*{enteGradazione}" class="px-3 py-2 border border-gray-300 rounded text-sm">
+                            <option value="">Ente</option>
+                            <option value="PSA">PSA</option>
+                            <option value="BGS">BGS</option>
+                            <option value="CGC">CGC</option>
+                        </select>
+                        <input type="text" th:field="*{votoGradazione}" placeholder="Voto (es: 10)"
+                               class="px-3 py-2 border border-gray-300 rounded text-sm">
+                    </div>
+                </div>
+
                 <!-- Immagine -->
                 <div class="border-t border-gray-100 pt-3 mb-3">
                     <label class="block text-sm text-gray-600 mb-2">📷 Immagine (opzionale)</label>
@@ -84,6 +103,11 @@
         </div>
 
         <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const cb = document.getElementById('gradata');
+                if (cb && cb.checked) document.getElementById('gradingRow').classList.remove('hidden');
+            });
+
             function convertToBase64(input) {
                 const file = input.files[0];
                 if (file) {

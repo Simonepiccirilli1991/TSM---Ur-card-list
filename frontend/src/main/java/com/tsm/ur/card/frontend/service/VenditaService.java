@@ -17,7 +17,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class VenditaService {
 
-    @Value("${seor.url}")
+    @Value("${app.seor-api-url}")
     private String seorUrl;
 
     private final WebClient.Builder webClientBuilder;

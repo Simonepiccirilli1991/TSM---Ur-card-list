@@ -25,5 +25,29 @@ public class SealedOnePiece {
     private String dataVendita;
     private String piattaformaVendita;
     private String note;
+
+    @Override
+    public String toString() {
+        return "SealedOnePiece{" +
+                "id='" + id + '\'' +
+                ", usernameAssociato='" + usernameAssociato + '\'' +
+                ", nome='" + nome + '\'' +
+                ", lingua='" + lingua + '\'' +
+                ", espansione='" + espansione + '\'' +
+                ", prezzoAcquisto=" + prezzoAcquisto +
+                ", dataAcquisto='" + dataAcquisto + '\'' +
+                ", dataUscitaProdottoUfficiale='" + dataUscitaProdottoUfficiale + '\'' +
+                ", acquistatoPresso='" + acquistatoPresso + '\'' +
+                ", stato='" + stato + '\'' +
+                ", statoAcquisto='" + statoAcquisto + '\'' +
+                ", foto=[MASKED]" +
+                ", prezzoVendita=" + prezzoVendita +
+                ", costiVendita=" + costiVendita +
+                ", netto=" + netto +
+                ", dataVendita='" + dataVendita + '\'' +
+                ", piattaformaVendita='" + piattaformaVendita + '\'' +
+                ", note='" + note + '\'' +
+                '}';
+    }
 }
 

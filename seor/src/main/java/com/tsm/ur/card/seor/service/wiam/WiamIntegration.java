@@ -180,7 +180,7 @@ public class WiamIntegration {
         AggiungiPokemonSealedRequest wiamRequest = new AggiungiPokemonSealedRequest(
                 username,
                 request.nome(),
-                request.linguea(),
+                request.lingua(),
                 request.espansione(),
                 request.prezzoAcquisto(),
                 request.dataAcquisto(),
@@ -261,7 +261,7 @@ public class WiamIntegration {
         AggiungiOnePieceSealedRequest wiamRequest = new AggiungiOnePieceSealedRequest(
                 username,
                 request.nome(),
-                request.linguea(),
+                request.lingua(),
                 request.espansione(),
                 request.prezzoAcquisto(),
                 request.dataAcquisto(),

@@ -9,57 +9,85 @@
     <div th:with="pageTitle='Carte One Piece'">
 
         <!-- Header -->
-        <div class="flex items-center justify-between mb-4">
-            <h1 class="text-lg font-bold text-gray-800">🃏 Carte One Piece</h1>
-            <a href="/onepiece/cards/add" class="px-3 py-2 bg-red-500 hover:bg-red-600 text-white text-sm rounded">
-                + Aggiungi Carta
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800">🏴‍☠️ Le Mie Carte One Piece</h1>
+                <p class="text-gray-500" th:text="${#lists.size(cardList)} + ' carte trovate'">0 carte</p>
+            </div>
+            <a href="/onepiece/cards/add"
+               class="inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-3 rounded-lg transition-colors">
+                ➕ Aggiungi Carta
             </a>
         </div>
 
         <!-- Filters -->
-        <div class="bg-white rounded border p-3 mb-4">
-            <div class="flex gap-2 text-xs">
-                <a th:href="@{/onepiece/cards}"
-                   th:classappend="${selectedStato == null} ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
-                   class="px-3 py-1 rounded">Tutte</a>
-                <a th:href="@{/onepiece/cards(stato='collezione')}"
-                   th:classappend="${selectedStato == 'collezione'} ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
-                   class="px-3 py-1 rounded">Collezione</a>
-                <a th:href="@{/onepiece/cards(stato='in_vendita')}"
-                   th:classappend="${selectedStato == 'in_vendita'} ? 'bg-amber-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
-                   class="px-3 py-1 rounded">In Vendita</a>
-                <a th:href="@{/onepiece/cards(stato='venduto')}"
-                   th:classappend="${selectedStato == 'venduto'} ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
-                   class="px-3 py-1 rounded">Vendute</a>
-            </div>
+        <div class="bg-white rounded-xl shadow-md p-4 mb-6">
+            <form method="get" class="flex flex-wrap items-center gap-4">
+                <label class="text-sm font-medium text-gray-600">Filtra per stato:</label>
+                <select name="stato" onchange="this.form.submit()"
+                        class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500">
+                    <option value="">Tutti</option>
+                    <option value="in_collezione" th:selected="${selectedStato == 'in_collezione'}">In Collezione</option>
+                    <option value="in_vendita" th:selected="${selectedStato == 'in_vendita'}">In Vendita</option>
+                    <option value="venduto" th:selected="${selectedStato == 'venduto'}">Venduto</option>
+                </select>
+                <a th:if="${selectedStato}" href="/onepiece/cards" class="text-sm text-gray-500 hover:text-gray-700">✕ Reset filtri</a>
+            </form>
         </div>
 
-        <!-- Cards List -->
-        <div class="grid grid-cols-1 gap-2">
-            <div th:each="card : ${cardList}" class="bg-white rounded border p-3 hover:shadow-md transition-shadow">
-                <div class="flex items-center justify-between">
-                    <div class="flex-1">
-                        <h3 class="font-bold text-sm" th:text="${card.nome}">Nome</h3>
-                        <p class="text-xs text-gray-500">
-                            <span th:text="${card.espansione}">Espansione</span> •
-                            <span th:text="${card.lingua}">Lingua</span> •
-                            <span th:text="${card.statoCarta}">Condizione</span>
-                        </p>
+        <!-- Cards Grid -->
+        <div th:if="${!#lists.isEmpty(cardList)}" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div th:each="card : ${cardList}" class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                <!-- Card Image -->
+                <div class="h-48 bg-gradient-to-br from-red-100 to-red-200 flex items-center justify-center">
+                    <span th:if="${card.foto == null}" class="text-6xl">🏴‍☠️</span>
+                    <img th:if="${card.foto != null}" th:src="'data:image/jpeg;base64,' + ${card.foto}" class="h-full w-full object-cover" alt="Card">
+                </div>
+
+                <!-- Card Info -->
+                <div class="p-4">
+                    <h3 class="font-bold text-lg text-gray-800 mb-1" th:text="${card.nome}">Nome Carta</h3>
+                    <p class="text-sm text-gray-500 mb-2" th:text="${card.espansione}">Espansione</p>
+
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-lg font-bold text-green-600" th:text="${#numbers.formatDecimal(card.prezzoAcquisto, 1, 2)} + ' €'">0 €</span>
+                        <span class="px-2 py-1 text-xs rounded-full"
+                              th:classappend="${card.stato == 'venduto'} ? 'bg-green-100 text-green-800' : (${card.statoAcquisto == 'non disponibile'} ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800')"
+                              th:text="${card.stato == 'venduto'} ? 'Venduto' : (${card.statoAcquisto == 'non disponibile'} ? 'In Vendita' : 'In Collezione')">Stato</span>
                     </div>
-                    <div class="text-right">
-                        <p class="font-bold text-sm" th:text="${#numbers.formatDecimal(card.prezzoAcquisto, 1, 2)} + ' €'">0€</p>
-                        <span class="px-2 py-0.5 rounded text-xs"
-                              th:classappend="${card.stato == 'venduto'} ? 'bg-green-100 text-green-700' : (${card.stato == 'in_vendita'} ? 'bg-amber-100 text-amber-700' : 'bg-blue-100 text-blue-700')"
-                              th:text="${card.stato}">stato</span>
+
+                    <!-- Grading Badge -->
+                    <div th:if="${card.gradata}" class="mb-3">
+                        <span class="inline-flex items-center gap-1 px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">
+                            ⭐ <span th:text="${card.enteGradazione} + ' ' + ${card.votoGradazione}">PSA 10</span>
+                        </span>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex gap-2">
+                        <a th:href="@{/onepiece/cards/{id}(id=${card.id})}"
+                           class="flex-1 text-center bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 rounded-lg text-sm transition-colors">
+                            Dettagli
+                        </a>
+                        <form th:action="@{/onepiece/cards/{id}/delete(id=${card.id})}" method="post" class="flex-1"
+                              onsubmit="return confirm('Sei sicuro di voler eliminare questa carta?')">
+                            <button type="submit" class="w-full bg-red-100 hover:bg-red-200 text-red-700 py-2 rounded-lg text-sm transition-colors">
+                                Elimina
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div th:if="${#lists.isEmpty(cardList)}" class="bg-white rounded border p-8 text-center text-gray-400">
-                <p class="text-3xl mb-2">📭</p>
-                <p class="text-sm">Nessuna carta trovata</p>
-                <a href="/onepiece/cards/add" class="inline-block mt-2 text-xs text-red-600 hover:underline">Aggiungi la prima carta →</a>
-            </div>
+        <!-- Empty State -->
+        <div th:if="${#lists.isEmpty(cardList)}" class="bg-white rounded-xl shadow-md p-12 text-center">
+            <span class="text-6xl mb-4 block">🏴‍☠️</span>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Nessuna carta trovata</h3>
+            <p class="text-gray-500 mb-6">Inizia ad aggiungere le tue carte One Piece alla collezione!</p>
+            <a href="/onepiece/cards/add" class="inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-3 rounded-lg transition-colors">
+                ➕ Aggiungi la prima carta
+            </a>
         </div>
 
     </div>

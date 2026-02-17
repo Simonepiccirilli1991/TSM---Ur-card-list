@@ -100,8 +100,8 @@
                                 th:text="${item.netto != null} ? ${#numbers.formatDecimal(item.netto, 1, 2)} + ' €' : '-'">-</td>
                             <td class="py-3 px-4">
                                 <span class="px-2 py-1 text-xs rounded-full"
-                                      th:classappend="${item.stato == 'venduto'} ? 'bg-green-100 text-green-800' : (${item.stato == 'in_vendita'} ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800')"
-                                      th:text="${item.stato}">Stato</span>
+                                      th:classappend="${item.stato == 'venduto'} ? 'bg-green-100 text-green-800' : (${item.stato == 'acquistato' and item.statoAcquisto == 'non disponibile'} ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800')"
+                                      th:text="${item.stato == 'venduto'} ? 'Venduto' : (${item.stato == 'acquistato' and item.statoAcquisto == 'non disponibile'} ? 'In Vendita' : 'In Collezione')">Stato</span>
                             </td>
                             <td class="py-3 px-4 text-gray-500 text-sm" th:text="${item.dataAcquisto}">Data</td>
                         </tr>

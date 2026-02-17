@@ -15,5 +15,21 @@ public record AggiungiCartaOnePieceRequest(
         String votoGradazione,
         String statoCarta
 ) {
+    @Override
+    public String toString() {
+        return "AggiungiCartaOnePieceRequest[" +
+                "usernameAssociato=" + usernameAssociato +
+                ", nome=" + nome +
+                ", lingua=" + lingua +
+                ", espansione=" + espansione +
+                ", prezzoAcquisto=" + prezzoAcquisto +
+                ", dataAcquisto=" + dataAcquisto +
+                ", foto=[MASKED]" +
+                ", gradata=" + gradata +
+                ", enteGradazione=" + enteGradazione +
+                ", votoGradazione=" + votoGradazione +
+                ", statoCarta=" + statoCarta +
+                "]";
+    }
 }
 

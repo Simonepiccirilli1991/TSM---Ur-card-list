@@ -33,4 +33,30 @@ public class CartaPokemon {
     private String dataVendita;
     private String piattaformaVendita;
     private String note;
+
+    @Override
+    public String toString() {
+        return "CartaPokemon{" +
+                "id='" + id + '\'' +
+                ", usernameAssociato='" + usernameAssociato + '\'' +
+                ", nome='" + nome + '\'' +
+                ", lingua='" + lingua + '\'' +
+                ", espansione='" + espansione + '\'' +
+                ", prezzoAcquisto=" + prezzoAcquisto +
+                ", dataAcquisto='" + dataAcquisto + '\'' +
+                ", foto=[MASKED]" +
+                ", gradata=" + gradata +
+                ", enteGradazione='" + enteGradazione + '\'' +
+                ", votoGradazione='" + votoGradazione + '\'' +
+                ", statoCarta='" + statoCarta + '\'' +
+                ", stato='" + stato + '\'' +
+                ", statoAcquisto='" + statoAcquisto + '\'' +
+                ", prezzoVendita=" + prezzoVendita +
+                ", costiVendita=" + costiVendita +
+                ", netto=" + netto +
+                ", dataVendita='" + dataVendita + '\'' +
+                ", piattaformaVendita='" + piattaformaVendita + '\'' +
+                ", note='" + note + '\'' +
+                '}';
+    }
 }

@@ -39,4 +39,34 @@ public class BaseRecap{
     private String tipoProdotto;
     // Tipo, carta o sealed
     private String tipo;
+
+    @Override
+    public String toString() {
+        return "BaseRecap{" +
+                "id='" + id + '\'' +
+                ", usernameAssociato='" + usernameAssociato + '\'' +
+                ", nome='" + nome + '\'' +
+                ", lingua='" + lingua + '\'' +
+                ", espansione='" + espansione + '\'' +
+                ", prezzoAcquisto=" + prezzoAcquisto +
+                ", dataAcquisto='" + dataAcquisto + '\'' +
+                ", foto=[MASKED]" +
+                ", gradata=" + gradata +
+                ", enteGradazione='" + enteGradazione + '\'' +
+                ", votoGradazione='" + votoGradazione + '\'' +
+                ", statoCarta='" + statoCarta + '\'' +
+                ", stato='" + stato + '\'' +
+                ", statoAcquisto='" + statoAcquisto + '\'' +
+                ", prezzoVendita=" + prezzoVendita +
+                ", costiVendita=" + costiVendita +
+                ", netto=" + netto +
+                ", dataVendita='" + dataVendita + '\'' +
+                ", piattaformaVendita='" + piattaformaVendita + '\'' +
+                ", note='" + note + '\'' +
+                ", dataUscitaProdottoUfficiale='" + dataUscitaProdottoUfficiale + '\'' +
+                ", acquistatoPresso='" + acquistatoPresso + '\'' +
+                ", tipoProdotto='" + tipoProdotto + '\'' +
+                ", tipo='" + tipo + '\'' +
+                '}';
+    }
 }

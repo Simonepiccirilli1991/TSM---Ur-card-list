@@ -25,5 +25,30 @@ public class SealedPokemon {
     private String dataVendita;
     private String piattaformaVendita;
     private String note;
+
+    @Override
+    public String toString() {
+        return "SealedPokemon{" +
+                "id='" + id + '\'' +
+                ", usernameAssociato='" + usernameAssociato + '\'' +
+                ", nome='" + nome + '\'' +
+                ", lingua='" + lingua + '\'' +
+                ", edizione='" + edizione + '\'' +
+                ", espansione='" + espansione + '\'' +
+                ", prezzoAcquisto=" + prezzoAcquisto +
+                ", dataAcquisto='" + dataAcquisto + '\'' +
+                ", dataUscitaProdottoUfficiale='" + dataUscitaProdottoUfficiale + '\'' +
+                ", stato='" + stato + '\'' +
+                ", statoAcquisto='" + statoAcquisto + '\'' +
+                ", foto=[MASKED]" +
+                ", acquistatoPresso='" + acquistatoPresso + '\'' +
+                ", prezzoVendita=" + prezzoVendita +
+                ", costiVendita=" + costiVendita +
+                ", netto=" + netto +
+                ", dataVendita='" + dataVendita + '\'' +
+                ", piattaformaVendita='" + piattaformaVendita + '\'' +
+                ", note='" + note + '\'' +
+                '}';
+    }
 }
 

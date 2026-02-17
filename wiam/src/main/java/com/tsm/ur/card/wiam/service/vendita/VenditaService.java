@@ -50,7 +50,9 @@ public class VenditaService {
         carta.setStato(VENDUTO);
         carta.setPrezzoVendita(request.prezzoVendita());
         carta.setCostiVendita(request.costiVendita());
-        carta.setNetto(request.prezzoVendita() - (request.costiVendita() != null ? request.costiVendita() : 0));
+        double prezzoAcquisto = carta.getPrezzoAcquisto() != null ? carta.getPrezzoAcquisto() : 0;
+        double costiVendita = request.costiVendita() != null ? request.costiVendita() : 0;
+        carta.setNetto(request.prezzoVendita() - prezzoAcquisto - costiVendita);
         carta.setDataVendita(request.dataVendita().format(DateTimeFormatter.ISO_LOCAL_DATE));
         carta.setPiattaformaVendita(request.piattaformaVendita());
         carta.setNote(request.note());
@@ -72,7 +74,9 @@ public class VenditaService {
         sealed.setStato(VENDUTO);
         sealed.setPrezzoVendita(request.prezzoVendita());
         sealed.setCostiVendita(request.costiVendita());
-        sealed.setNetto(request.prezzoVendita() - (request.costiVendita() != null ? request.costiVendita() : 0));
+        double prezzoAcquisto = sealed.getPrezzoAcquisto() != null ? sealed.getPrezzoAcquisto() : 0;
+        double costiVendita = request.costiVendita() != null ? request.costiVendita() : 0;
+        sealed.setNetto(request.prezzoVendita() - prezzoAcquisto - costiVendita);
         sealed.setDataVendita(request.dataVendita().format(DateTimeFormatter.ISO_LOCAL_DATE));
         sealed.setPiattaformaVendita(request.piattaformaVendita());
         sealed.setNote(request.note());
@@ -94,7 +98,9 @@ public class VenditaService {
         carta.setStato(VENDUTO);
         carta.setPrezzoVendita(request.prezzoVendita());
         carta.setCostiVendita(request.costiVendita());
-        carta.setNetto(request.prezzoVendita() - (request.costiVendita() != null ? request.costiVendita() : 0));
+        double prezzoAcquisto = carta.getPrezzoAcquisto() != null ? carta.getPrezzoAcquisto() : 0;
+        double costiVendita = request.costiVendita() != null ? request.costiVendita() : 0;
+        carta.setNetto(request.prezzoVendita() - prezzoAcquisto - costiVendita);
         carta.setDataVendita(request.dataVendita().format(DateTimeFormatter.ISO_LOCAL_DATE));
         carta.setPiattaformaVendita(request.piattaformaVendita());
         carta.setNote(request.note());
@@ -116,7 +122,9 @@ public class VenditaService {
         sealed.setStato(VENDUTO);
         sealed.setPrezzoVendita(request.prezzoVendita());
         sealed.setCostiVendita(request.costiVendita());
-        sealed.setNetto(request.prezzoVendita() - (request.costiVendita() != null ? request.costiVendita() : 0));
+        double prezzoAcquisto = sealed.getPrezzoAcquisto() != null ? sealed.getPrezzoAcquisto() : 0;
+        double costiVendita = request.costiVendita() != null ? request.costiVendita() : 0;
+        sealed.setNetto(request.prezzoVendita() - prezzoAcquisto - costiVendita);
         sealed.setDataVendita(request.dataVendita().format(DateTimeFormatter.ISO_LOCAL_DATE));
         sealed.setPiattaformaVendita(request.piattaformaVendita());
         sealed.setNote(request.note());
