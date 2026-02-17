@@ -7,20 +7,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.time.Duration;
-
 @Configuration
 public class WebClientConfig {
 
     @Value("${wiam.base-url}")
     private String wiamBaseUrl;
 
-    @Value("${wiam.timeout:30000}")
-    private int timeout;
-
     @Bean
-    public WebClient wiamWebClient(WebClient.Builder webClientBuilder) {
-        return webClientBuilder
+    public WebClient wiamWebClient() {
+        return WebClient.builder()
                 .baseUrl(wiamBaseUrl)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)

@@ -1,6 +1,6 @@
 package com.tsm.ur.card.seor.model.request;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public record AggiungiCartaPokemonRequest(
         String usernameAssociato,
@@ -8,7 +8,7 @@ public record AggiungiCartaPokemonRequest(
         String lingua,
         String espansione,
         Double prezzoAcquisto,
-        LocalDateTime dataAcquisto,
+        LocalDate dataAcquisto,
         byte[] foto,
         Boolean gradata,
         String enteGradazione,

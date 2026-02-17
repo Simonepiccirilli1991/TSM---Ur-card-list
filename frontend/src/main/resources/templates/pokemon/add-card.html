@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::content})}">
+<head>
+    <title>Aggiungi Carta Pokemon</title>
+</head>
+<body>
+<th:block th:fragment="content">
+    <div th:with="pageTitle='Aggiungi Carta'">
+
+        <div class="max-w-lg mx-auto">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-4">
+                <a href="/pokemon/cards" class="text-gray-500 hover:text-gray-700 text-sm">← Indietro</a>
+                <span class="text-yellow-500 text-2xl">🃏</span>
+            </div>
+
+            <!-- Form -->
+            <form th:action="@{/pokemon/cards/add}" th:object="${form}" method="post" class="bg-white rounded-lg border border-gray-200 p-4">
+
+                <h2 class="text-lg font-bold text-gray-800 mb-4">Nuova Carta Pokemon</h2>
+
+                <!-- Row 1: Nome -->
+                <input type="text" th:field="*{nome}" required placeholder="Nome carta *"
+                       class="w-full px-3 py-2 border border-gray-300 rounded mb-3 text-sm focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500">
+
+                <!-- Row 2: Espansione + Lingua -->
+                <div class="grid grid-cols-2 gap-2 mb-3">
+                    <input type="text" th:field="*{espansione}" required placeholder="Espansione *"
+                           class="px-3 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-yellow-500">
+                    <select th:field="*{lingua}" required class="px-3 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-yellow-500">
+                        <option value="">Lingua *</option>
+                        <option value="IT">🇮🇹 IT</option>
+                        <option value="EN">🇬🇧 EN</option>
+                        <option value="JP">🇯🇵 JP</option>
+                        <option value="FR">🇫🇷 FR</option>
+                        <option value="DE">🇩🇪 DE</option>
+                    </select>
+                </div>
+
+                <!-- Row 3: Prezzo + Data -->
+                <div class="grid grid-cols-2 gap-2 mb-3">
+                    <div class="relative">
+                        <input type="number" th:field="*{prezzoAcquisto}" required step="0.01" min="0" placeholder="Prezzo *"
+                               class="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-yellow-500">
+                        <span class="absolute right-3 top-2 text-gray-400 text-sm">€</span>
+                    </div>
+                    <input type="date" th:field="*{dataAcquisto}" required
+                           class="px-3 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-yellow-500">
+                </div>
+
+                <!-- Row 4: Condizione -->
+                <select th:field="*{statoCarta}" required class="w-full px-3 py-2 border border-gray-300 rounded mb-3 text-sm focus:ring-1 focus:ring-yellow-500">
+                    <option value="">Condizione carta *</option>
+                    <option value="mint">Mint</option>
+                    <option value="near_mint">Near Mint</option>
+                    <option value="excellent">Excellent</option>
+                    <option value="good">Good</option>
+                    <option value="light_played">Light Played</option>
+                </select>
+
+                <!-- Gradata Toggle -->
+                <div class="border-t border-gray-100 pt-3 mb-3">
+                    <label class="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+                        <input type="checkbox" th:field="*{gradata}" id="gradata" onchange="document.getElementById('gradingRow').classList.toggle('hidden', !this.checked)"
+                               class="w-4 h-4 text-yellow-500 rounded">
+                        Carta gradata
+                    </label>
+                    <div id="gradingRow" class="grid grid-cols-2 gap-2 mt-2 hidden">
+                        <select th:field="*{enteGradazione}" class="px-3 py-2 border border-gray-300 rounded text-sm">
+                            <option value="">Ente</option>
+                            <option value="PSA">PSA</option>
+                            <option value="BGS">BGS</option>
+                            <option value="CGC">CGC</option>
+                        </select>
+                        <input type="text" th:field="*{votoGradazione}" placeholder="Voto (es: 10)"
+                               class="px-3 py-2 border border-gray-300 rounded text-sm">
+                    </div>
+                </div>
+
+                <!-- Immagine -->
+                <div class="border-t border-gray-100 pt-3 mb-3">
+                    <label class="block text-sm text-gray-600 mb-2">📷 Immagine (opzionale)</label>
+                    <input type="hidden" th:field="*{foto}" id="fotoBase64">
+                    <input type="file" id="fotoInput" accept="image/*"
+                           class="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-yellow-500"
+                           onchange="convertToBase64(this)">
+                    <div id="imagePreview" class="mt-2 hidden">
+                        <img id="previewImg" src="" alt="Preview" class="max-h-32 rounded border">
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex gap-2">
+                    <button type="submit" class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-4 rounded text-sm">
+                        Salva
+                    </button>
+                    <a href="/pokemon/cards" class="px-4 py-2 border border-gray-300 text-gray-600 rounded hover:bg-gray-50 text-sm">
+                        Annulla
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const cb = document.getElementById('gradata');
+                if (cb && cb.checked) document.getElementById('gradingRow').classList.remove('hidden');
+            });
+
+            function convertToBase64(input) {
+                const file = input.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const base64 = e.target.result.split(',')[1]; // Rimuove il prefisso data:image/...;base64,
+                        document.getElementById('fotoBase64').value = base64;
+                        document.getElementById('previewImg').src = e.target.result;
+                        document.getElementById('imagePreview').classList.remove('hidden');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        </script>
+
+    </div>
+</th:block>
+</body>
+</html>
+

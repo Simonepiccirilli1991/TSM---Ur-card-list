@@ -1,6 +1,6 @@
 package com.tsm.ur.card.seor.model.request;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public record AggiungiOnePieceSealedRequest(
         String username,
@@ -8,8 +8,8 @@ public record AggiungiOnePieceSealedRequest(
         String linguea,
         String espansione,
         Double prezzoAcquisto,
-        LocalDateTime dataAcquisto,
-        LocalDateTime dataUscitaProdottoUfficiale,
+        LocalDate dataAcquisto,
+        LocalDate dataUscitaProdottoUfficiale,
         byte[] foto,
         String acquistatoPresso
 ) {

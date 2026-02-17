@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Feb 17 11:46:48 CET 2026
+@default-nexus-maven-central-plugin-https\://nexus.alm.poste.it/repository/maven-public/.lastUpdated=1771325208462
+https\://nexus.alm.poste.it/repository/maven-public/.error=Could not transfer artifact org.junit\:junit-bom\:pom\:5.11.0-M2 from/to nexus-maven-central-plugin (https\://nexus.alm.poste.it/repository/maven-public/)\: nexus.alm.poste.it
+https\://repo.maven.apache.org/maven2/.lastUpdated=1771325208499

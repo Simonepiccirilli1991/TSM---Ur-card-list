@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::content})}">
+<head>
+    <title>Recap</title>
+</head>
+<body>
+<th:block th:fragment="content">
+    <div th:with="pageTitle='Recap Collezione'">
+
+        <!-- Header -->
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">📋 Recap Completo</h1>
+            <p class="text-gray-500">Visualizza e analizza tutti i tuoi prodotti</p>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <div class="bg-white rounded-xl shadow-md p-4">
+                <p class="text-sm text-gray-500">Totale Acquisti</p>
+                <p class="text-2xl font-bold text-red-600" th:text="'-' + ${#numbers.formatDecimal(summary.totaleAcquisti, 1, 2)} + ' €'">0 €</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-md p-4">
+                <p class="text-sm text-gray-500">Totale Vendite</p>
+                <p class="text-2xl font-bold text-green-600" th:text="'+' + ${#numbers.formatDecimal(summary.totaleVendite, 1, 2)} + ' €'">0 €</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-md p-4">
+                <p class="text-sm text-gray-500">Profitto Netto</p>
+                <p class="text-2xl font-bold"
+                   th:classappend="${summary.profittoNetto >= 0} ? 'text-green-600' : 'text-red-600'"
+                   th:text="${#numbers.formatDecimal(summary.profittoNetto, 1, 2)} + ' €'">0 €</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-md p-4">
+                <p class="text-sm text-gray-500">Prodotti Totali</p>
+                <p class="text-2xl font-bold text-purple-600" th:text="${summary.totaleProdotti}">0</p>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="bg-white rounded-xl shadow-md p-4 mb-6">
+            <form method="get" class="flex flex-wrap items-center gap-4">
+                <div>
+                    <label class="text-sm font-medium text-gray-600 mr-2">Tipo:</label>
+                    <select name="tipo" onchange="this.form.submit()"
+                            class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <option value="">Tutti</option>
+                        <option value="pokemon_card" th:selected="${selectedTipo == 'pokemon_card'}">Pokemon Card</option>
+                        <option value="pokemon_sealed" th:selected="${selectedTipo == 'pokemon_sealed'}">Pokemon Sealed</option>
+                        <option value="onepiece_sealed" th:selected="${selectedTipo == 'onepiece_sealed'}">One Piece Sealed</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-sm font-medium text-gray-600 mr-2">Stato:</label>
+                    <select name="stato" onchange="this.form.submit()"
+                            class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <option value="">Tutti</option>
+                        <option value="in_collezione" th:selected="${selectedStato == 'in_collezione'}">In Collezione</option>
+                        <option value="in_vendita" th:selected="${selectedStato == 'in_vendita'}">In Vendita</option>
+                        <option value="venduto" th:selected="${selectedStato == 'venduto'}">Venduto</option>
+                    </select>
+                </div>
+                <a th:if="${selectedTipo != null or selectedStato != null}" href="/recap" class="text-sm text-gray-500 hover:text-gray-700">✕ Reset filtri</a>
+            </form>
+        </div>
+
+        <!-- Table -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="text-left py-4 px-4 text-sm font-semibold text-gray-600">Nome</th>
+                            <th class="text-left py-4 px-4 text-sm font-semibold text-gray-600">Tipo</th>
+                            <th class="text-left py-4 px-4 text-sm font-semibold text-gray-600">Espansione</th>
+                            <th class="text-left py-4 px-4 text-sm font-semibold text-gray-600">Lingua</th>
+                            <th class="text-right py-4 px-4 text-sm font-semibold text-gray-600">Acquisto</th>
+                            <th class="text-right py-4 px-4 text-sm font-semibold text-gray-600">Vendita</th>
+                            <th class="text-right py-4 px-4 text-sm font-semibold text-gray-600">Profitto</th>
+                            <th class="text-left py-4 px-4 text-sm font-semibold text-gray-600">Stato</th>
+                            <th class="text-left py-4 px-4 text-sm font-semibold text-gray-600">Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="item, iter : ${recapList}"
+                            class="border-t hover:bg-gray-50"
+                            th:classappend="${iter.odd} ? 'bg-white' : 'bg-gray-50'">
+                            <td class="py-3 px-4 font-medium" th:text="${item.nome}">Nome</td>
+                            <td class="py-3 px-4">
+                                <span class="px-2 py-1 text-xs rounded-full"
+                                      th:classappend="${item.tipoProdotto == 'pokemon_card'} ? 'bg-yellow-100 text-yellow-800' : (${item.tipoProdotto == 'pokemon_sealed'} ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800')"
+                                      th:text="${item.tipoProdotto == 'pokemon_card'} ? '🃏 Card' : (${item.tipoProdotto == 'pokemon_sealed'} ? '📦 PKM' : '🏴‍☠️ OP')">Tipo</span>
+                            </td>
+                            <td class="py-3 px-4 text-gray-600 text-sm" th:text="${item.espansione}">Espansione</td>
+                            <td class="py-3 px-4 text-gray-600 text-sm" th:text="${item.lingua}">IT</td>
+                            <td class="py-3 px-4 text-right text-red-600 font-medium" th:text="${#numbers.formatDecimal(item.prezzoAcquisto, 1, 2)} + ' €'">0 €</td>
+                            <td class="py-3 px-4 text-right text-green-600 font-medium"
+                                th:text="${item.prezzoVendita != null} ? ${#numbers.formatDecimal(item.prezzoVendita, 1, 2)} + ' €' : '-'">-</td>
+                            <td class="py-3 px-4 text-right font-bold"
+                                th:classappend="${item.netto != null and item.netto >= 0} ? 'text-green-600' : 'text-red-600'"
+                                th:text="${item.netto != null} ? ${#numbers.formatDecimal(item.netto, 1, 2)} + ' €' : '-'">-</td>
+                            <td class="py-3 px-4">
+                                <span class="px-2 py-1 text-xs rounded-full"
+                                      th:classappend="${item.stato == 'venduto'} ? 'bg-green-100 text-green-800' : (${item.stato == 'in_vendita'} ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800')"
+                                      th:text="${item.stato}">Stato</span>
+                            </td>
+                            <td class="py-3 px-4 text-gray-500 text-sm" th:text="${item.dataAcquisto}">Data</td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(recapList)}">
+                            <td colspan="9" class="py-12 text-center text-gray-500">
+                                <span class="text-4xl mb-2 block">📋</span>
+                                Nessun prodotto trovato
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Status Summary -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+            <div class="bg-blue-50 rounded-xl p-4 text-center">
+                <p class="text-2xl font-bold text-blue-600" th:text="${summary.prodottiInCollezione}">0</p>
+                <p class="text-sm text-blue-700">In Collezione</p>
+            </div>
+            <div class="bg-yellow-50 rounded-xl p-4 text-center">
+                <p class="text-2xl font-bold text-yellow-600" th:text="${summary.prodottiInVendita}">0</p>
+                <p class="text-sm text-yellow-700">In Vendita</p>
+            </div>
+            <div class="bg-green-50 rounded-xl p-4 text-center">
+                <p class="text-2xl font-bold text-green-600" th:text="${summary.prodottiVenduti}">0</p>
+                <p class="text-sm text-green-700">Venduti</p>
+            </div>
+        </div>
+
+    </div>
+</th:block>
+</body>
+</html>
+

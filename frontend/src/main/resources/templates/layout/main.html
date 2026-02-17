@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} ?: 'TSM UR Card List'">TSM UR Card List</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Dashboard Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <style>
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 40px;
+            left: 0;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 12px 16px;
+            color: #333;
+            text-decoration: none;
+            font-size: 0.875rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f5f5f5;
+        }
+
+        .dropdown-btn {
+            display: flex;
+            align-items: center;
+            height: 36px;
+            padding: 0 16px;
+            border-radius: 8px;
+            color: rgba(255,255,255,0.9);
+            background: rgba(255,255,255,0.1);
+            border: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .dropdown-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body style="background-color: #f3f4f6; min-height: 100vh; margin: 0;">
+    <div style="display: flex; flex-direction: column; min-height: 100vh;">
+
+        <!-- NAVBAR ORIZZONTALE -->
+        <nav style="background: linear-gradient(to right, #1f2937, #111827); color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100;">
+            <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; width: 100%; height: 60px; padding: 0 32px; max-width: 1400px; margin: 0 auto; box-sizing: border-box;">
+
+                <!-- Logo -->
+                <div style="display: flex; flex-direction: row; align-items: center; gap: 10px; height: 40px;">
+                    <span style="font-size: 1.5rem; line-height: 1;">🎴</span>
+                    <span style="font-size: 1.1rem; font-weight: 700; color: #ffd89b;">TSM UR Card List</span>
+                </div>
+
+                <!-- Navigation Links - Centro -->
+                <div style="display: flex; flex-direction: row; align-items: center; gap: 4px; height: 40px;">
+
+                    <!-- Dashboard -->
+                    <a href="/dashboard"
+                       th:style="${#strings.startsWith(currentPath ?: '', '/dashboard')} ? 'display: flex; align-items: center; height: 36px; padding: 0 16px; border-radius: 8px; color: white; text-decoration: none; font-size: 0.875rem; font-weight: 500; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); box-shadow: 0 2px 8px rgba(102,126,234,0.4);' : 'display: flex; align-items: center; height: 36px; padding: 0 16px; border-radius: 8px; color: rgba(255,255,255,0.9); text-decoration: none; font-size: 0.875rem; font-weight: 500; background: rgba(255,255,255,0.1);'"
+                       style="display: flex; align-items: center; height: 36px; padding: 0 16px; border-radius: 8px; color: rgba(255,255,255,0.9); text-decoration: none; font-size: 0.875rem; font-weight: 500; background: rgba(255,255,255,0.1);">
+                        <span style="margin-right: 6px;">📊</span> Dashboard
+                    </a>
+
+                    <!-- Pokemon Dropdown -->
+                    <div class="dropdown">
+                        <button class="dropdown-btn" type="button">
+                            <span style="margin-right: 6px;">⚡</span> Pokemon <span style="margin-left: 6px; font-size: 0.6rem;">▼</span>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="/pokemon/cards">🃏 Carte Pokemon</a>
+                            <a href="/pokemon/sealed">📦 Sealed Pokemon</a>
+                        </div>
+                    </div>
+
+                    <!-- One Piece Dropdown -->
+                    <div class="dropdown">
+                        <button class="dropdown-btn" type="button">
+                            <span style="margin-right: 6px;">🏴‍☠️</span> One Piece <span style="margin-left: 6px; font-size: 0.6rem;">▼</span>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="/onepiece/cards">🃏 Carte One Piece</a>
+                            <a href="/onepiece/sealed">📦 Sealed One Piece</a>
+                        </div>
+                    </div>
+
+                    <!-- Recap -->
+                    <a href="/recap"
+                       th:style="${#strings.startsWith(currentPath ?: '', '/recap')} ? 'display: flex; align-items: center; height: 36px; padding: 0 16px; border-radius: 8px; color: white; text-decoration: none; font-size: 0.875rem; font-weight: 500; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); box-shadow: 0 2px 8px rgba(102,126,234,0.4);' : 'display: flex; align-items: center; height: 36px; padding: 0 16px; border-radius: 8px; color: rgba(255,255,255,0.9); text-decoration: none; font-size: 0.875rem; font-weight: 500; background: rgba(255,255,255,0.1);'"
+                       style="display: flex; align-items: center; height: 36px; padding: 0 16px; border-radius: 8px; color: rgba(255,255,255,0.9); text-decoration: none; font-size: 0.875rem; font-weight: 500; background: rgba(255,255,255,0.1);">
+                        <span style="margin-right: 6px;">📋</span> Recap
+                    </a>
+                </div>
+
+                <!-- User Menu - Destra -->
+                <div style="display: flex; flex-direction: row; align-items: center; gap: 12px; height: 40px;">
+                    <div style="display: flex; flex-direction: row; align-items: center; gap: 8px; height: 36px; padding: 0 12px; background: rgba(255,255,255,0.1); border-radius: 18px;">
+                        <div style="width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, #6366f1, #9333ea); display: flex; align-items: center; justify-content: center; font-size: 0.75rem;">👤</div>
+                        <span style="font-size: 0.8rem; font-weight: 500;" th:text="${username}">User</span>
+                    </div>
+                    <a href="/logout" style="display: flex; align-items: center; height: 32px; padding: 0 12px; border-radius: 6px; color: white; text-decoration: none; font-size: 0.8rem; font-weight: 500; background: #ef4444;">
+                        <span style="margin-right: 4px;">🚪</span> Logout
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main style="flex: 1;">
+            <div style="max-width: 1280px; margin: 0 auto; padding: 24px;">
+                <!-- Flash Messages -->
+                <div th:if="${success}" style="margin-bottom: 16px; padding: 16px; background: #dcfce7; border: 1px solid #22c55e; color: #166534; border-radius: 8px;">
+                    <span th:text="${success}">Successo</span>
+                </div>
+                <div th:if="${error}" style="margin-bottom: 16px; padding: 16px; background: #fee2e2; border: 1px solid #ef4444; color: #991b1b; border-radius: 8px;">
+                    <span th:text="${error}">Errore</span>
+                </div>
+
+                <th:block th:replace="${content}" />
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.dropdown').forEach(function (dropdown) {
+                const btn = dropdown.querySelector('.dropdown-btn');
+                const content = dropdown.querySelector('.dropdown-content');
+
+                btn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+
+                    // Close other dropdowns
+                    document.querySelectorAll('.dropdown-content.show').forEach(function(openContent) {
+                        if (openContent !== content) {
+                            openContent.classList.remove('show');
+                        }
+                    });
+
+                    // Toggle current dropdown
+                    content.classList.toggle('show');
+                });
+            });
+
+            // Close all dropdowns when clicking outside
+            window.addEventListener('click', function (e) {
+                document.querySelectorAll('.dropdown').forEach(function(dropdown) {
+                    if (!dropdown.contains(e.target)) {
+                        dropdown.querySelector('.dropdown-content').classList.remove('show');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+

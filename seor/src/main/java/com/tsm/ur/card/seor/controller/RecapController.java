@@ -1,15 +1,14 @@
 package com.tsm.ur.card.seor.controller;
 
-import com.tsm.ur.card.seor.model.request.RecapRequest;
 import com.tsm.ur.card.seor.model.response.BaseRecap;
 import com.tsm.ur.card.seor.service.RecapService;
+import com.tsm.ur.card.seor.util.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -19,10 +18,12 @@ import java.util.List;
 public class RecapController {
 
     private final RecapService recapService;
+    private final JwtUtils jwtUtils;
 
-    @PostMapping("/getrecap")
-    public ResponseEntity<List<BaseRecap>> getRecap(@RequestBody RecapRequest request) {
-        return  ResponseEntity.ok(recapService.getRecap(request));
+    @GetMapping("/getrecap")
+    public ResponseEntity<List<BaseRecap>> getRecap(Authentication authentication) {
+        String username = jwtUtils.extractUsername(authentication);
+        return ResponseEntity.ok(recapService.getRecap(username));
     }
 }
 

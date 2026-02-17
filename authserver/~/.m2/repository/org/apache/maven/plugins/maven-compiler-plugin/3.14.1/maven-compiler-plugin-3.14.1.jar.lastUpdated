@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon Feb 16 20:06:11 CET 2026
+@default-nexus-maven-central-plugin-https\://nexus.alm.poste.it/repository/maven-public/.lastUpdated=1771268771490
+https\://nexus.alm.poste.it/repository/maven-public/.error=Could not transfer artifact org.apache.maven.plugins\:maven-compiler-plugin\:jar\:3.14.1 from/to nexus-maven-central-plugin (https\://nexus.alm.poste.it/repository/maven-public/)\: nexus.alm.poste.it
+https\://repo.maven.apache.org/maven2/.lastUpdated=1771268771532

@@ -1,0 +1,11 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon Feb 16 20:06:08 CET 2026
+eadfc56b9f8b441610affe6befd23da388bf18cd@default-nexus-alm-https\://nexus.alm.poste.it/repository/common-library/.lastUpdated=1771268768858
+eadfc56b9f8b441610affe6befd23da388bf18cd@default-nexus-maven-central2-https\://nexus.alm.poste.it/repository/maven-public/.lastUpdated=1771268768856
+eadfc56b9f8b441610affe6befd23da388bf18cd@default-nexus-releases-https\://nexus.alm.poste.it/repository/BPM_RAPPORTI_FINANZIARI_BANCOPOSTA_Release_AP-00533/.lastUpdated=1771268768858
+eadfc56b9f8b441610affe6befd23da388bf18cd@default-nexus-snapshots-https\://nexus.alm.poste.it/repository/BPM_RAPPORTI_FINANZIARI_BANCOPOSTA_Snapshot_AP-00533/.lastUpdated=1771268768857
+https\://nexus.alm.poste.it/repository/BPM_RAPPORTI_FINANZIARI_BANCOPOSTA_Release_AP-00533/.error=Could not transfer artifact org.infinispan\:infinispan-build-configuration-parent\:pom\:15.2.6.Final from/to nexus-releases (https\://nexus.alm.poste.it/repository/BPM_RAPPORTI_FINANZIARI_BANCOPOSTA_Release_AP-00533/)\: nexus.alm.poste.it
+https\://nexus.alm.poste.it/repository/BPM_RAPPORTI_FINANZIARI_BANCOPOSTA_Snapshot_AP-00533/.error=Could not transfer artifact org.infinispan\:infinispan-build-configuration-parent\:pom\:15.2.6.Final from/to nexus-snapshots (https\://nexus.alm.poste.it/repository/BPM_RAPPORTI_FINANZIARI_BANCOPOSTA_Snapshot_AP-00533/)\: nexus.alm.poste.it
+https\://nexus.alm.poste.it/repository/common-library/.error=Could not transfer artifact org.infinispan\:infinispan-build-configuration-parent\:pom\:15.2.6.Final from/to nexus-alm (https\://nexus.alm.poste.it/repository/common-library)\: nexus.alm.poste.it
+https\://nexus.alm.poste.it/repository/maven-public/.error=Could not transfer artifact org.infinispan\:infinispan-build-configuration-parent\:pom\:15.2.6.Final from/to nexus-maven-central2 (https\://nexus.alm.poste.it/repository/maven-public/)\: nexus.alm.poste.it
+https\://repo.maven.apache.org/maven2/.lastUpdated=1771268768899

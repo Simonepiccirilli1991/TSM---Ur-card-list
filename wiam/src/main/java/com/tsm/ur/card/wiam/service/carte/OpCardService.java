@@ -76,7 +76,7 @@ public class OpCardService {
 
     public List<CartaOnePiece> getCartaOPByUsername(String username){
         log.info("getCartaOPByUsername started with username: {}",username);
-        var carte = cardOnePieceRepo.findByUsername(username);
+        var carte = cardOnePieceRepo.findByUsernameAssociato(username);
         log.info("getCartaOPByUsername ended successfully with carte: {}",carte);
         return carte;
     }

@@ -1,10 +1,15 @@
 package com.tsm.ur.card.wiam.controller;
 
+import com.tsm.ur.card.wiam.entity.CartaOnePiece;
 import com.tsm.ur.card.wiam.entity.SealedOnePiece;
 import com.tsm.ur.card.wiam.model.BaseResponse;
 import com.tsm.ur.card.wiam.model.request.AggiungiOnePiceSealedRequest;
+import com.tsm.ur.card.wiam.model.request.AggiungiOnePieceCardRequest;
+import com.tsm.ur.card.wiam.model.request.CancellaCartaOpRequest;
 import com.tsm.ur.card.wiam.model.request.CancellaOpSealedRequest;
+import com.tsm.ur.card.wiam.model.response.AggiungiCartaOPResponse;
 import com.tsm.ur.card.wiam.model.response.AggiungiSealedOPResponse;
+import com.tsm.ur.card.wiam.service.carte.OpCardService;
 import com.tsm.ur.card.wiam.service.carte.OpSealedService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +24,7 @@ public class OnePieceController {
 
 
     private final OpSealedService opSealedService;
+    private final OpCardService opCardService;
 
     // ONE PIECE SEALED APIs
     @PostMapping("/add-sealed")
@@ -47,4 +53,28 @@ public class OnePieceController {
     }
 
     // ONE PIECE CARD APIs
+    @PostMapping("/add-card")
+    public ResponseEntity<AggiungiCartaOPResponse> aggiungiCartaOP(@RequestBody AggiungiOnePieceCardRequest request) {
+        return ResponseEntity.ok(opCardService.aggiungiCartaOP(request));
+    }
+
+    @PostMapping("/delete-card")
+    public ResponseEntity<BaseResponse> cancellaCartaOP(@RequestBody CancellaCartaOpRequest request) {
+        return ResponseEntity.ok(opCardService.cancellaCartaOP(request));
+    }
+
+    @GetMapping("/get-card/{idCarta}")
+    public ResponseEntity<CartaOnePiece> getCard(@PathVariable String idCarta) {
+        return ResponseEntity.ok(opCardService.getCartaOPById(idCarta));
+    }
+
+    @GetMapping("/get-cards-by-user/{username}")
+    public ResponseEntity<List<CartaOnePiece>> getCardsByUser(@PathVariable String username) {
+        return ResponseEntity.ok(opCardService.getCartaOPByUsername(username));
+    }
+
+    @GetMapping("/get-cards-bystato/{username}/{stato}")
+    public ResponseEntity<List<CartaOnePiece>> getCardsByStato(@PathVariable String username, @PathVariable String stato) {
+        return ResponseEntity.ok(opCardService.getCartaOpByStatoAndUsername(stato, username));
+    }
 }

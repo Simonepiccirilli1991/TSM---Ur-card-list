@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon Feb 16 20:06:22 CET 2026
+@default-nexus-maven-central-plugin-https\://nexus.alm.poste.it/repository/maven-public/.lastUpdated=1771268782225
+https\://nexus.alm.poste.it/repository/maven-public/.error=Could not transfer artifact javax.inject\:javax.inject\:jar\:1 from/to nexus-maven-central-plugin (https\://nexus.alm.poste.it/repository/maven-public/)\: nexus.alm.poste.it
+https\://repo.maven.apache.org/maven2/.lastUpdated=1771268782467

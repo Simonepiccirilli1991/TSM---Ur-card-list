@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::content})}">
+<head>
+    <title>Dettaglio Carta One Piece</title>
+</head>
+<body>
+<th:block th:fragment="content">
+    <div th:with="pageTitle='Dettaglio Carta One Piece'">
+
+        <!-- Back Link -->
+        <a href="/onepiece/cards" class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-6">
+            ← Torna alla lista
+        </a>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Image -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <div class="aspect-[3/4] bg-gradient-to-br from-red-100 to-red-200 rounded-lg flex items-center justify-center">
+                    <span th:if="${card.foto == null}" class="text-8xl">🏴‍☠️</span>
+                    <img th:if="${card.foto != null}" th:src="'data:image/jpeg;base64,' + ${card.foto}" class="h-full w-full object-cover rounded-lg" alt="Card">
+                </div>
+            </div>
+
+            <!-- Details -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Main Info -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <h1 class="text-3xl font-bold text-gray-800" th:text="${card.nome}">Nome Carta</h1>
+                            <p class="text-lg text-gray-500" th:text="${card.espansione}">Espansione</p>
+                        </div>
+                        <span class="px-3 py-1 text-sm rounded-full font-medium"
+                              th:classappend="${card.statoAcquisto == 'VENDUTO'} ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'"
+                              th:text="${card.statoAcquisto ?: 'DISPONIBILE'}">Stato</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div>
+                            <p class="text-sm text-gray-500">Lingua</p>
+                            <p class="font-medium" th:text="${card.lingua}">-</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Condizione</p>
+                            <p class="font-medium" th:text="${card.statoCarta}">-</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Data Acquisto</p>
+                            <p class="font-medium" th:text="${card.dataAcquisto}">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grading Info -->
+                <div th:if="${card.gradata}" class="bg-purple-50 rounded-xl shadow-md p-6">
+                    <h3 class="text-lg font-semibold text-purple-800 mb-4">⭐ Gradazione</h3>
+                    <div class="flex items-center gap-6">
+                        <div>
+                            <p class="text-sm text-purple-600">Ente</p>
+                            <p class="text-xl font-bold text-purple-800" th:text="${card.enteGradazione}">PSA</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-purple-600">Voto</p>
+                            <p class="text-xl font-bold text-purple-800" th:text="${card.votoGradazione}">10</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Financial Info -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">💰 Informazioni Economiche</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div>
+                            <p class="text-sm text-gray-500">Prezzo Acquisto</p>
+                            <p class="text-xl font-bold text-red-600" th:text="${#numbers.formatDecimal(card.prezzoAcquisto, 1, 2)} + ' €'">0 €</p>
+                        </div>
+                        <div th:if="${card.prezzoVendita != null}">
+                            <p class="text-sm text-gray-500">Prezzo Vendita</p>
+                            <p class="text-xl font-bold text-green-600" th:text="${#numbers.formatDecimal(card.prezzoVendita, 1, 2)} + ' €'">0 €</p>
+                        </div>
+                        <div th:if="${card.netto != null}">
+                            <p class="text-sm text-gray-500">Profitto Netto</p>
+                            <p class="text-xl font-bold"
+                               th:classappend="${card.netto >= 0} ? 'text-green-600' : 'text-red-600'"
+                               th:text="${#numbers.formatDecimal(card.netto, 1, 2)} + ' €'">0 €</p>
+                        </div>
+                    </div>
+
+                    <div th:if="${card.statoAcquisto == 'VENDUTO'}" class="mt-4 pt-4 border-t">
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <p class="text-gray-500">Data Vendita</p>
+                                <p class="font-medium" th:text="${card.dataVendita}">-</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-500">Piattaforma</p>
+                                <p class="font-medium" th:text="${card.piattaformaVendita}">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div th:if="${card.note != null}" class="bg-gray-50 rounded-xl shadow-md p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">📝 Note</h3>
+                    <p class="text-gray-600" th:text="${card.note}">Note</p>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex gap-4">
+                    <a th:if="${card.stato != 'venduto'}"
+                       th:href="@{/vendita/vendi(idProdotto=${card.id}, tipoProdotto='ONEPIECE_CARD', nomeProdotto=${card.nome})}"
+                       class="flex-1 bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-lg transition-colors text-center">
+                        💰 Vendi Carta
+                    </a>
+                    <form th:action="@{/onepiece/cards/{id}/delete(id=${card.id})}" method="post" class="flex-1"
+                          onsubmit="return confirm('Sei sicuro di voler eliminare questa carta?')">
+                        <button type="submit" class="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-lg transition-colors">
+                            🗑️ Elimina Carta
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</th:block>
+</body>
+</html>
+

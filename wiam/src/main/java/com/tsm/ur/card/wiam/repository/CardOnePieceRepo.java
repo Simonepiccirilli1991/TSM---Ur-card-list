@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface CardOnePieceRepo extends MongoRepository<CartaOnePiece, String> {
 
-    List<CartaOnePiece> findByUsername(String username);
+    List<CartaOnePiece> findByUsernameAssociato(String username);
 
     List<CartaOnePiece> findByUsernameAssociatoAndStatoAcquisto(String username, String statoAcquisto);
 }

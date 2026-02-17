@@ -5,7 +5,7 @@ import com.tsm.ur.card.wiam.except.OnePieceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.ObjectUtils;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import static com.tsm.ur.card.wiam.util.WiamCostanti.StatiAcquisto.DISPONIBILE;
@@ -19,7 +19,7 @@ public record AggiungiCartaPokemonRequest(
         String lingua,
         String espansione,
         Double prezzoAcquisto,
-        LocalDateTime dataAcquisto,
+        LocalDate dataAcquisto,
         byte[] foto,
 
         // sezione gradata
@@ -52,7 +52,7 @@ public record AggiungiCartaPokemonRequest(
         var entity = new CartaPokemon();
         entity.setUsernameAssociato(usernameAssociato);
         entity.setNome(nome);
-        entity.setDataAcquisto(dataAcquisto.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        entity.setDataAcquisto(dataAcquisto.format(DateTimeFormatter.ISO_LOCAL_DATE));
         entity.setLingua(lingua);
         entity.setEspansione(espansione);
         entity.setPrezzoAcquisto(prezzoAcquisto);

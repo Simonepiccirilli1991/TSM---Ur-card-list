@@ -1,3 +1,21 @@
 spring:
   application:
     name: frontend
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+
+server:
+  port: 3000
+
+# URL dei servizi backend
+app:
+  auth-server-url: http://localhost:9001
+  seor-api-url: http://localhost:8080
+
+logging:
+  level:
+    com.tsm.ur.card.frontend: DEBUG

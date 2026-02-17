@@ -1,6 +1,5 @@
 package com.tsm.ur.card.seor.service;
 
-import com.tsm.ur.card.seor.model.request.CambioPswRequest;
 import com.tsm.ur.card.seor.model.request.RecuperoPswRequest;
 import com.tsm.ur.card.seor.model.request.RegistraUtenteRequest;
 import com.tsm.ur.card.seor.model.response.BaseResponse;
@@ -8,7 +7,6 @@ import com.tsm.ur.card.seor.service.wiam.WiamIntegration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
@@ -22,9 +20,9 @@ public class UtenteService {
         return wiamIntegration.enrollUtente(username);
     }
 
-    public BaseResponse cambioPassword(CambioPswRequest request) {
-        log.info("UtenteService - cambioPassword per username: {}", request.username());
-        return wiamIntegration.cambioPassword(request);
+    public BaseResponse cambioPassword(String username, String nuovaPassword) {
+        log.info("UtenteService - cambioPassword per username: {}", username);
+        return wiamIntegration.cambioPassword(username, nuovaPassword);
     }
 
     public BaseResponse recuperoPassword(RecuperoPswRequest request) {

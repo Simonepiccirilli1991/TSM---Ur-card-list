@@ -1,3 +1,13 @@
 spring:
   application:
     name: authserver
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/tsm-ur-card-list
+
+server:
+  port: 9001
+
+logging:
+  level:
+    org.springframework.security: DEBUG

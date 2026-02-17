@@ -5,7 +5,7 @@ import com.tsm.ur.card.wiam.except.OnePieceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.ObjectUtils;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import static com.tsm.ur.card.wiam.util.WiamCostanti.StatiAcquisto.DISPONIBILE;
@@ -18,8 +18,8 @@ public record AggiungiOnePiceSealedRequest
          String linguea,
          String espansione,
          Double prezzoAcquisto,
-         LocalDateTime dataAcquisto,
-         LocalDateTime dataUscitaProdottoUfficiale,
+         LocalDate dataAcquisto,
+         LocalDate dataUscitaProdottoUfficiale,
          byte[] foto,
          String acquistatoPresso){
 
@@ -44,9 +44,9 @@ public record AggiungiOnePiceSealedRequest
                 entity.setEspansione(this.espansione);
 
             entity.setPrezzoAcquisto(this.prezzoAcquisto);
-            entity.setDataAcquisto(this.dataAcquisto.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+            entity.setDataAcquisto(this.dataAcquisto.format(DateTimeFormatter.ISO_LOCAL_DATE));
             if(!ObjectUtils.isEmpty(this.dataUscitaProdottoUfficiale))
-                entity.setDataUscitaProdottoUfficiale(this.dataUscitaProdottoUfficiale.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+                entity.setDataUscitaProdottoUfficiale(this.dataUscitaProdottoUfficiale.format(DateTimeFormatter.ISO_LOCAL_DATE));
 
             if (!ObjectUtils.isEmpty(this.foto))
                 entity.setFoto(this.foto);

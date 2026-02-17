@@ -4,8 +4,6 @@ import com.tsm.ur.card.seor.model.dto.CartaPokemon;
 import com.tsm.ur.card.seor.model.dto.SealedPokemon;
 import com.tsm.ur.card.seor.model.request.AggiungiCartaPokemonRequest;
 import com.tsm.ur.card.seor.model.request.AggiungiPokemonSealedRequest;
-import com.tsm.ur.card.seor.model.request.CancellaCartaPokemonRequest;
-import com.tsm.ur.card.seor.model.request.CancellaPokemonSealedRequest;
 import com.tsm.ur.card.seor.model.response.AggiungiCartaPokemonResponse;
 import com.tsm.ur.card.seor.model.response.AggiungiSealedPkmResponse;
 import com.tsm.ur.card.seor.model.response.BaseResponse;
@@ -13,7 +11,6 @@ import com.tsm.ur.card.seor.service.wiam.WiamIntegration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -26,14 +23,14 @@ public class PokemonService {
 
     // ===================== POKEMON CARD APIs =====================
 
-    public AggiungiCartaPokemonResponse aggiungiCartaPokemon(AggiungiCartaPokemonRequest request) {
-        log.info("PokemonService - aggiungiCartaPokemon per username: {}", request.usernameAssociato());
-        return wiamIntegration.aggiungiCartaPokemon(request);
+    public AggiungiCartaPokemonResponse aggiungiCartaPokemon(String username, AggiungiCartaPokemonRequest request) {
+        log.info("PokemonService - aggiungiCartaPokemon per username (JWT): {}", username);
+        return wiamIntegration.aggiungiCartaPokemon(username, request);
     }
 
-    public BaseResponse cancellaCartaPokemon(CancellaCartaPokemonRequest request) {
-        log.info("PokemonService - cancellaCartaPokemon per idCarta: {}", request.idCarta());
-        return wiamIntegration.cancellaCartaPokemon(request);
+    public BaseResponse cancellaCartaPokemon(String username, String idCarta) {
+        log.info("PokemonService - cancellaCartaPokemon per username (JWT): {}, idCarta: {}", username, idCarta);
+        return wiamIntegration.cancellaCartaPokemon(username, idCarta);
     }
 
     public CartaPokemon getCartaPokemonById(String idCarta) {
@@ -53,14 +50,14 @@ public class PokemonService {
 
     // ===================== POKEMON SEALED APIs =====================
 
-    public AggiungiSealedPkmResponse aggiungiSealedPokemon(AggiungiPokemonSealedRequest request) {
-        log.info("PokemonService - aggiungiSealedPokemon per username: {}", request.username());
-        return wiamIntegration.aggiungiSealedPokemon(request);
+    public AggiungiSealedPkmResponse aggiungiSealedPokemon(String username, AggiungiPokemonSealedRequest request) {
+        log.info("PokemonService - aggiungiSealedPokemon per username (JWT): {}", username);
+        return wiamIntegration.aggiungiSealedPokemon(username, request);
     }
 
-    public BaseResponse cancellaSealedPokemon(CancellaPokemonSealedRequest request) {
-        log.info("PokemonService - cancellaSealedPokemon per idSealed: {}", request.idSealed());
-        return wiamIntegration.cancellaSealedPokemon(request);
+    public BaseResponse cancellaSealedPokemon(String username, String idSealed) {
+        log.info("PokemonService - cancellaSealedPokemon per username (JWT): {}, idSealed: {}", username, idSealed);
+        return wiamIntegration.cancellaSealedPokemon(username, idSealed);
     }
 
     public SealedPokemon getSealedPokemonById(String idSealed) {

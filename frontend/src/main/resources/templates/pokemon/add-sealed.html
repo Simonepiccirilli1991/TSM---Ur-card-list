@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::content})}">
+<head>
+    <title>Aggiungi Sealed Pokemon</title>
+</head>
+<body>
+<th:block th:fragment="content">
+    <div th:with="pageTitle='Aggiungi Sealed'">
+
+        <div class="max-w-lg mx-auto">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-4">
+                <a href="/pokemon/sealed" class="text-gray-500 hover:text-gray-700 text-sm">← Indietro</a>
+                <span class="text-blue-500 text-2xl">📦</span>
+            </div>
+
+            <!-- Form -->
+            <form th:action="@{/pokemon/sealed/add}" th:object="${form}" method="post" class="bg-white rounded-lg border border-gray-200 p-4">
+
+                <h2 class="text-lg font-bold text-gray-800 mb-4">Nuovo Sealed Pokemon</h2>
+
+                <!-- Row 1: Nome -->
+                <input type="text" th:field="*{nome}" required placeholder="Nome prodotto *"
+                       class="w-full px-3 py-2 border border-gray-300 rounded mb-3 text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+
+                <!-- Row 2: Espansione + Lingua -->
+                <div class="grid grid-cols-2 gap-2 mb-3">
+                    <input type="text" th:field="*{espansione}" required placeholder="Espansione *"
+                           class="px-3 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-blue-500">
+                    <select th:field="*{lingua}" required class="px-3 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-blue-500">
+                        <option value="">Lingua *</option>
+                        <option value="IT">🇮🇹 IT</option>
+                        <option value="EN">🇬🇧 EN</option>
+                        <option value="JP">🇯🇵 JP</option>
+                        <option value="FR">🇫🇷 FR</option>
+                        <option value="DE">🇩🇪 DE</option>
+                    </select>
+                </div>
+
+                <!-- Row 3: Prezzo + Data Acquisto -->
+                <div class="grid grid-cols-2 gap-2 mb-3">
+                    <div class="relative">
+                        <input type="number" th:field="*{prezzoAcquisto}" required step="0.01" min="0" placeholder="Prezzo *"
+                               class="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-blue-500">
+                        <span class="absolute right-3 top-2 text-gray-400 text-sm">€</span>
+                    </div>
+                    <input type="date" th:field="*{dataAcquisto}" required
+                           class="px-3 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-blue-500">
+                </div>
+
+                <!-- Row 4: Opzionali (collassabili) -->
+                <details class="mb-3">
+                    <summary class="text-xs text-gray-500 cursor-pointer hover:text-gray-700">+ Dettagli opzionali</summary>
+                    <div class="grid grid-cols-2 gap-2 mt-2">
+                        <input type="date" th:field="*{dataUscitaProdottoUfficiale}" placeholder="Data uscita"
+                               class="px-3 py-2 border border-gray-300 rounded text-sm">
+                        <input type="text" th:field="*{acquistatoPresso}" placeholder="Acquistato presso"
+                               class="px-3 py-2 border border-gray-300 rounded text-sm">
+                    </div>
+                </details>
+
+                <!-- Immagine -->
+                <div class="border-t border-gray-100 pt-3 mb-3">
+                    <label class="block text-sm text-gray-600 mb-2">📷 Immagine (opzionale)</label>
+                    <input type="hidden" th:field="*{foto}" id="fotoBase64">
+                    <input type="file" id="fotoInput" accept="image/*"
+                           class="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-blue-500"
+                           onchange="convertToBase64(this)">
+                    <div id="imagePreview" class="mt-2 hidden">
+                        <img id="previewImg" src="" alt="Preview" class="max-h-32 rounded border">
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex gap-2">
+                    <button type="submit" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded text-sm">
+                        Salva
+                    </button>
+                    <a href="/pokemon/sealed" class="px-4 py-2 border border-gray-300 text-gray-600 rounded hover:bg-gray-50 text-sm">
+                        Annulla
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <script>
+            function convertToBase64(input) {
+                const file = input.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const base64 = e.target.result.split(',')[1];
+                        document.getElementById('fotoBase64').value = base64;
+                        document.getElementById('previewImg').src = e.target.result;
+                        document.getElementById('imagePreview').classList.remove('hidden');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        </script>
+
+    </div>
+</th:block>
+</body>
+</html>
+

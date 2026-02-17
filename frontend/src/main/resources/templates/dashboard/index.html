@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::content})}">
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+<th:block th:fragment="content">
+    <style>
+        /* Dashboard Custom Styles */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            padding: 20px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInUp 0.5s ease-out backwards;
+        }
+        .stat-card:nth-child(1) { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); animation-delay: 0.4s; }
+        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+
+        .stat-icon { font-size: 2.5rem; margin-bottom: 10px; animation: pulse 2s infinite; }
+        .stat-value { font-size: 2rem; font-weight: 700; margin: 10px 0; }
+        .stat-label { font-size: 0.85rem; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .quick-add-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease-out backwards;
+            animation-delay: 0.5s;
+        }
+
+        .quick-add-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .quick-add-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4); }
+        .quick-add-btn.pokemon { background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%); }
+        .quick-add-btn.onepiece { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+
+        .collection-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+        .collection-card:nth-child(1) { animation-delay: 0.6s; }
+        .collection-card:nth-child(2) { animation-delay: 0.7s; }
+        .collection-card:hover { transform: translateY(-5px); box-shadow: 0 12px 35px rgba(0,0,0,0.15); }
+
+        .collection-icon { font-size: 2rem; animation: pulse 3s infinite; }
+        .collection-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .collection-stat {
+            flex: 1;
+            padding: 12px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .collection-stat:hover { transform: scale(1.05); }
+        .stat-number { font-size: 1.8rem; font-weight: 700; color: #667eea; }
+        .stat-text { font-size: 0.75rem; color: #666; text-transform: uppercase; }
+
+        .collection-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.875rem;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: rgba(102, 126, 234, 0.1);
+            transition: all 0.3s ease;
+        }
+        .collection-link:hover { background: rgba(102, 126, 234, 0.2); transform: translateX(3px); }
+
+        .riepilogo-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            animation: fadeInUp 0.6s ease-out backwards;
+            animation-delay: 0.8s;
+        }
+
+        .riepilogo-title { font-size: 1.1rem; font-weight: 700; color: #333; margin-bottom: 16px; }
+        .riepilogo-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+        .riepilogo-row:hover { background: rgba(102, 126, 234, 0.05); padding-left: 8px; padding-right: 8px; }
+        .riepilogo-row:last-child {
+            border-bottom: none;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 8px;
+            padding: 16px 12px;
+            margin-top: 8px;
+        }
+
+        .amount-negative { color: #f5576c; font-weight: 600; }
+        .amount-positive { color: #43e97b; font-weight: 600; }
+
+        .recent-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+        .recent-table thead th {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #666;
+        }
+        .recent-table thead th:first-child { border-radius: 8px 0 0 0; }
+        .recent-table thead th:last-child { border-radius: 0 8px 0 0; }
+        .recent-table tbody tr { transition: all 0.3s ease; }
+        .recent-table tbody tr:hover {
+            background: linear-gradient(90deg, rgba(102, 126, 234, 0.05) 0%, transparent 100%);
+            transform: translateX(5px);
+        }
+        .recent-table tbody td { padding: 12px; border-bottom: 1px solid #f0f0f0; }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .status-venduto { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: white; }
+        .status-in-vendita { background: linear-gradient(135deg, #ffd89b 0%, #ff9a56 100%); color: white; }
+        .status-collezione { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; }
+
+        .empty-state { text-align: center; padding: 40px; color: #999; }
+        .empty-icon { font-size: 4rem; margin-bottom: 16px; opacity: 0.5; }
+    </style>
+
+    <div th:with="pageTitle='Dashboard'">
+
+        <!-- Stats Cards Row -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <!-- Valore Collezione -->
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-value" th:text="${#numbers.formatDecimal(stats.valoreCollezione, 1, 2)} + ' €'">0 €</div>
+                <div class="stat-label">Valore Collezione</div>
+            </div>
+
+            <!-- Profitto -->
+            <div class="stat-card">
+                <div class="stat-icon">📈</div>
+                <div class="stat-value" th:text="${#numbers.formatDecimal(stats.profittoTotale, 1, 2)} + ' €'">0 €</div>
+                <div class="stat-label">Profitto Totale</div>
+            </div>
+
+            <!-- In Vendita -->
+            <div class="stat-card">
+                <div class="stat-icon">🏷️</div>
+                <div class="stat-value" th:text="${stats.prodottiInVendita}">0</div>
+                <div class="stat-label">In Vendita</div>
+            </div>
+
+            <!-- Totale -->
+            <div class="stat-card">
+                <div class="stat-icon">📦</div>
+                <div class="stat-value" th:text="${stats.totaleProdotti}">0</div>
+                <div class="stat-label">Totale Prodotti</div>
+            </div>
+        </div>
+
+        <!-- Quick Add Section -->
+        <div class="quick-add-section">
+            <h3 class="text-lg font-bold text-gray-700 mb-4">⚡ Aggiungi Velocemente</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <a href="/pokemon/cards/add" class="quick-add-btn pokemon">
+                    🃏 Carta Pokémon
+                </a>
+                <a href="/pokemon/sealed/add" class="quick-add-btn pokemon">
+                    📦 Sealed Pokémon
+                </a>
+                <a href="/onepiece/cards/add" class="quick-add-btn onepiece">
+                    🃏 Carta One Piece
+                </a>
+                <a href="/onepiece/sealed/add" class="quick-add-btn onepiece">
+                    📦 Sealed One Piece
+                </a>
+            </div>
+        </div>
+
+        <!-- Collections Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+
+            <!-- Pokemon Collection -->
+            <div class="collection-card">
+                <div class="collection-header">
+                    <span class="collection-icon">⚡</span>
+                    <h2 class="collection-title">Pokémon</h2>
+                    <span class="ml-auto text-xs text-gray-400" th:text="${stats.numeroPokemonCards + stats.numeroPokemonSealed} + ' items'">0 items</span>
+                </div>
+
+                <div class="collection-stats">
+                    <div class="collection-stat">
+                        <div class="stat-number" th:text="${stats.numeroPokemonCards}">0</div>
+                        <div class="stat-text">Carte</div>
+                    </div>
+                    <div class="collection-stat">
+                        <div class="stat-number" th:text="${stats.numeroPokemonSealed}">0</div>
+                        <div class="stat-text">Sealed</div>
+                    </div>
+                </div>
+
+                <div class="collection-links">
+                    <a href="/pokemon/cards" class="collection-link">📋 Vedi Carte</a>
+                    <a href="/pokemon/sealed" class="collection-link">📋 Vedi Sealed</a>
+                </div>
+            </div>
+
+            <!-- One Piece Collection -->
+            <div class="collection-card">
+                <div class="collection-header">
+                    <span class="collection-icon">🏴‍☠️</span>
+                    <h2 class="collection-title">One Piece</h2>
+                    <span class="ml-auto text-xs text-gray-400" th:text="${stats.numeroOnePieceCards + stats.numeroOnePieceSealed} + ' items'">0 items</span>
+                </div>
+
+                <div class="collection-stats">
+                    <div class="collection-stat">
+                        <div class="stat-number" th:text="${stats.numeroOnePieceCards}">0</div>
+                        <div class="stat-text">Carte</div>
+                    </div>
+                    <div class="collection-stat">
+                        <div class="stat-number" th:text="${stats.numeroOnePieceSealed}">0</div>
+                        <div class="stat-text">Sealed</div>
+                    </div>
+                </div>
+
+                <div class="collection-links">
+                    <a href="/onepiece/cards" class="collection-link">📋 Vedi Carte</a>
+                    <a href="/onepiece/sealed" class="collection-link">📋 Vedi Sealed</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Section: Riepilogo + Recent -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+            <!-- Riepilogo Finanziario -->
+            <div class="riepilogo-card">
+                <h3 class="riepilogo-title">
+                    💵 Riepilogo Finanziario
+                </h3>
+
+                <div class="riepilogo-row">
+                    <span>Acquisti</span>
+                    <span class="amount-negative" th:text="'-' + ${#numbers.formatDecimal(stats.totaleAcquisti, 1, 2)} + ' €'">0 €</span>
+                </div>
+
+                <div class="riepilogo-row">
+                    <span>Vendite</span>
+                    <span class="amount-positive" th:text="'+' + ${#numbers.formatDecimal(stats.totaleVendite, 1, 2)} + ' €'">0 €</span>
+                </div>
+
+                <div class="riepilogo-row">
+                    <span>Prodotti Venduti</span>
+                    <span th:text="${stats.prodottiVenduti}">0</span>
+                </div>
+
+                <div class="riepilogo-row">
+                    <span class="font-bold">Profitto Netto</span>
+                    <span class="font-bold text-lg" th:text="${#numbers.formatDecimal(stats.profittoTotale, 1, 2)} + ' €'">0 €</span>
+                </div>
+
+                <a href="/recap" class="block mt-4 text-center py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all">
+                    📊 Vedi Recap Completo
+                </a>
+            </div>
+
+            <!-- Recent Items -->
+            <div class="col-span-2 riepilogo-card">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="riepilogo-title">
+                        🕐 Ultimi Acquisti
+                    </h3>
+                    <a href="/recap" class="text-sm text-indigo-600 hover:underline">Vedi tutti →</a>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="recent-table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Espansione</th>
+                                <th class="text-right">Prezzo</th>
+                                <th class="text-right">Stato</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="item : ${recentItems}">
+                                <td class="font-semibold" th:text="${item.nome}">Nome</td>
+                                <td class="text-gray-500" th:text="${item.espansione}">Espansione</td>
+                                <td class="text-right font-semibold" th:text="${#numbers.formatDecimal(item.prezzoAcquisto, 1, 2)} + ' €'">0 €</td>
+                                <td class="text-right">
+                                    <span class="status-badge"
+                                          th:classappend="${item.stato == 'venduto'} ? 'status-venduto' : (${item.stato == 'in_vendita'} ? 'status-in-vendita' : 'status-collezione')"
+                                          th:text="${item.stato}">stato</span>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(recentItems)}">
+                                <td colspan="4">
+                                    <div class="empty-state">
+                                        <div class="empty-icon">📭</div>
+                                        <p class="text-gray-500">Nessun prodotto ancora</p>
+                                        <p class="text-sm text-gray-400 mt-2">Inizia ad aggiungere prodotti alla tua collezione!</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</th:block>
+</body>
+</html>
+
